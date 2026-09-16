@@ -101,7 +101,7 @@ The preferences are the only thing to decide, and they are asked over three page
 | --- | --- |
 | Surface colour | the palette |
 | Shape | window buttons, shadows |
-| Transparency | the three switches |
+| Transparency | the four switches |
 
 `enter` moves to the next page and, from the last, to the review; `esc` steps back. Every value of
 every choice is listed under it, so the alternatives are visible without operating anything. On a
@@ -132,6 +132,7 @@ and every other page with them.
 | Window shadows | Shadows, No shadows | a soft drop shadow under every window |
 | Translucent panel | on/off | `widgets/panel-background.svg` |
 | Translucent popups & menus | on/off | `dialogs/background.svg` |
+| Translucent tooltips | on/off | `widgets/tooltip.svg` |
 | Translucent applets | on/off | `widgets/background.svg` |
 
 A choice's default is `"defaultValue"` in `theme.json` rather than whichever value happens to be
@@ -202,8 +203,9 @@ artwork stays the only place the theme's looks are defined. A switch names an ov
 when it is off; a choice feeds a `{placeholder}` in a path under `assets/variants/`.
 
 The launcher and the system tray popups cannot be separated: Plasma renders both from one
-`dialogs/background`, so one switch covers them and is named for both. Tooltips have no switch
-because they are opaque in the base artwork, and a switch that changes nothing is worse than none.
+`dialogs/background`, so one switch covers them and is named for both. Tooltips have their own
+switch. It reaches Plasma's tooltips — the panel, the task manager, widgets — and not the ones
+inside applications, which the Breeze application style draws and does not make translucent.
 
 `widgets/tasks.svg` is deliberately outside the transparency switches. Its `0.3`/`0.4` values are
 white `normal` and `hover` highlights drawn on top of the panel, not backgrounds — forcing them

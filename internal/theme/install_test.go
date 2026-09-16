@@ -218,13 +218,14 @@ func TestShippedThemeInstalls(t *testing.T) {
 }
 
 // TestTransparencyTogglesActIndependently is what the split bought: turning one
-// surface opaque must leave the other two alone. A whole-directory overlay
+// surface opaque must leave the others alone. A whole-directory overlay
 // could not do this without a directory per combination.
 func TestTransparencyTogglesActIndependently(t *testing.T) {
 	surfaces := map[string]string{
-		"transparency-panel":   "widgets/panel-background.svg",
-		"transparency-popups":  "dialogs/background.svg",
-		"transparency-applets": "widgets/background.svg",
+		"transparency-panel":    "widgets/panel-background.svg",
+		"transparency-popups":   "dialogs/background.svg",
+		"transparency-tooltips": "widgets/tooltip.svg",
+		"transparency-applets":  "widgets/background.svg",
 	}
 
 	for off := range surfaces {
@@ -416,6 +417,7 @@ func TestCornersSurviveTheTransparencySwitches(t *testing.T) {
 	surfaces := map[string]string{
 		"widgets/panel-background.svg": "transparency-panel",
 		"dialogs/background.svg":       "transparency-popups",
+		"widgets/tooltip.svg":          "transparency-tooltips",
 		"widgets/background.svg":       "transparency-applets",
 	}
 

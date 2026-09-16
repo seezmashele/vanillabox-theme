@@ -37,7 +37,7 @@ three of these axes and is now none of them — see [Corners are not an axis](#c
 | Panel tint | `off` | runtime, as a product with the palette | the style's `colors` |
 | Button style | `windows` | baked | the four button SVGs and `VanillaBoxDarkrc` |
 | Window shadow | `on` | Breeze's, baked as a product with the palette | `aurorae/decoration.svg`, the rc's `Padding*` |
-| Transparency (x3) | all on | per-file overlay | one file each, from `opaque/` |
+| Transparency (x4) | all on | per-file overlay | one file each, from `opaque/` |
 
 ### Corners are not an axis
 
@@ -518,12 +518,15 @@ The toggles are per-surface:
 | --- | --- | --- |
 | Panel | `widgets/panel-background.svg` | the panel strip |
 | Popups & menus | `dialogs/background.svg` | the application launcher **and** system tray popups |
+| Tooltips | `widgets/tooltip.svg` | Plasma tooltips: the panel, the task manager, widgets |
 | Applets | `widgets/background.svg` | plasmoid content areas |
 
-There are three, not the four the `opaque/` tree would suggest. `widgets/tooltip.svg` is opaque in
-the base artwork — `opacity.tooltip` is zero, so the root file and its `opaque/` copy are byte for
-byte the same — and a switch that cannot change anything is worse than no switch. A fourth toggle
-becomes real the moment tooltips are given an opacity, and not before.
+There are four, one for each file in the `opaque/` tree. Tooltips were opaque at first —
+`opacity.tooltip` was zero, so the root file and its `opaque/` copy were byte for byte the same, and
+a switch that cannot change anything is worse than no switch. They now take the popups' `0.85`, and
+the fourth toggle arrived with that opacity, as planned. It covers Plasma's tooltips only:
+application tooltips are drawn by the Breeze application style, which ignores alpha in the colour
+scheme, so no file this theme ships can make them translucent.
 
 The launcher and the tray popups cannot be separated. Both are `PlasmaCore.Dialog` instances and
 Plasma ships exactly one `dialogs/background` for all of them; the surfaces are not distinguishable
@@ -582,7 +585,7 @@ and nothing else: a control has no compositing fallback for them to choose betwe
     "windows": { "plateRadius":12, "closePlate":"#ea5c55", "width":22, "height":22, "buttonSpacing":4,
                  "closeHover":"0.75", "plainHover":"0.18", "rest":"0.85", "…":"…" }
   },
-  "opacity": { "panel":0.85, "popup":0.85, "tooltip":0, "button":0.85 }
+  "opacity": { "panel":0.85, "popup":0.85, "tooltip":0.85, "button":0.85 }
 }
 ```
 
@@ -765,9 +768,11 @@ Three things about it are easy to get wrong:
   into it would punch a ring out of the blur instead of showing up as a border, so the mask keeps
   the frame's full outer shape.
 
-The border does not change what the transparency toggles cover. `opacity.tooltip` is still zero, so
-the root file and its `opaque/` copy remain byte for byte the same and there is still no fourth
-toggle to offer.
+The border does not change what the transparency toggles cover, and it is not what the tooltip
+toggle turns off: the outline sits at `opacity.tooltipBorder` in both copies, and only the surface
+under it moves between `0.85` and opaque. `TestTheTooltipKeepsAVisibleEdge` still composites the
+outline over an opaque card, which is the opaque copy exactly and the translucent one over anything
+as dark as the card itself.
 
 #### The empty shadow prefix
 

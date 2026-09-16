@@ -121,6 +121,20 @@
           }
         },
         {
+          "id": "transparency-tooltips",
+          "name": "Translucent tooltips",
+          "description": "Tooltips over the panel and widgets",
+          "group": "Transparency",
+          "kind": "toggle",
+          "default": true,
+          "overlayWhenOff": {
+            "from": "variants/containers/opaque",
+            "files": [
+              "widgets/tooltip.svg"
+            ]
+          }
+        },
+        {
           "id": "transparency-applets",
           "name": "Translucent applets",
           "description": "Plasmoid content areas",
