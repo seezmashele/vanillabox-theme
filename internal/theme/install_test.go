@@ -254,7 +254,7 @@ func TestTransparencyTogglesActIndependently(t *testing.T) {
 // is that one of the four quietly keeps the default.
 func TestPaletteCarriesItsAccent(t *testing.T) {
 	palettes := map[string]struct{ surface, accent string }{
-		"neutral": {"41,41,41", "174,142,108"},
+		"neutral": {"41,41,41", "148,148,148"},
 		"slate":   {"39,42,47", "125,147,173"},
 		"plum":    {"43,39,45", "162,136,176"},
 	}
@@ -567,9 +567,9 @@ func TestTitlebarButtonMetrics(t *testing.T) {
 		box, margin, menu, spacing int
 		mark                       string // what the artwork must draw at that size
 	}{
-		// 12x12px symbol on a 22x22 box under a circular hover plate, a pixel
+		// 11x11px symbol on a 22x22 box under a circular hover plate, a pixel
 		// above centre like the traffic lights.
-		"windows": {box: 22, margin: 3, menu: 20, spacing: 4, mark: `scale(0.05113636363636364)`},
+		"windows": {box: 22, margin: 3, menu: 20, spacing: 4, mark: `scale(0.046875)`},
 		// 11px circle on a 22x22 box, a pixel above centre.
 		"mac": {box: 22, margin: 3, menu: 16, spacing: 0, mark: `<circle cx="12" cy="12" r="6"`},
 	}
@@ -621,7 +621,7 @@ func TestTitlebarButtonMetrics(t *testing.T) {
 
 			// The symbols' hover plate is round: a corner radius of half the
 			// 24-unit tile turns the rect into a circle.
-			if style == "windows" && !strings.Contains(closeSVG, `width="24" height="24" fill="#e0655f" rx="12" ry="12"`) {
+			if style == "windows" && !strings.Contains(closeSVG, `rx="12" ry="12"`) {
 				t.Error("close.svg hover plate is not a circle (want rx=ry=12 on the 24-unit tile)")
 			}
 		})

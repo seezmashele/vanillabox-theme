@@ -120,7 +120,7 @@ matter the axes split again — the generator already writes a product elsewhere
 without ceremony.
 
 Accents match their surfaces in temperature, so a variant reads as one decision rather than two.
-`neutral` is the exception and takes the grey surfaces, which is what makes it the quiet one rather
+`neutral` takes the grey surfaces and a grey accent, which is what makes it the quiet one rather
 than a colour with the volume turned down. Surfaces are named separately from palettes and
 referenced by name — a set can then be shared, and renaming a variant does not mean renaming the
 colours it points at.
@@ -365,10 +365,13 @@ was once deliberate — selection was `143,143,143` and the active task underlin
 `.ColorScheme-Highlight` rather than from a colour — and an accent that reached only application
 focus rings would be close to invisible in a desktop this neutral.
 
-Under the default `neutral` palette that makes the active task underline tan rather than grey. An
-`ash` palette once held the grey `143,143,143` selection as a way of keeping the original
+An `ash` palette once held the grey `143,143,143` selection as a way of keeping the original
 no-colour-anywhere look reachable; it was dropped, because a variant whose only content is the
-absence of the accent is a menu entry explaining a decision rather than offering one.
+absence of the accent is a menu entry explaining a decision rather than offering one. `neutral`
+carried a tan accent after that, and now carries grey — `#949494`, chosen at the tan's luminance so
+selection text and link contrast did not move — so the no-colour look is the default palette again
+rather than a separate entry. The accent still reaches every place it did; under `neutral` it is
+simply grey in all of them, the active task underline included.
 
 ## Buttons
 
@@ -389,8 +392,8 @@ worth writing down. `TestTitlebarButtonMetrics` pins them.
 | | Symbols | Traffic lights |
 | --- | --- | --- |
 | Button box | 22 x 22 | 22 x 22 |
-| `glyphSize` / `circleRadius` | 12 | 6 |
-| **Rendered mark** | 12 x 12 px | 11 px across |
+| `glyphSize` / `circleRadius` | 11 | 6 |
+| **Rendered mark** | 11 x 11 px | 11 px across |
 | `nudgeTop` | -1 | -1 |
 | `ButtonMarginTop` | 3 | 3 |
 | `ButtonWidthMenu` | 20 | 16 |
@@ -566,7 +569,7 @@ and nothing else: a control has no compositing fallback for them to choose betwe
     "…":      "…"
   },
   "palettes": {
-    "neutral": { "surfaces":"grey",   "accent":"#ae8e6c" },
+    "neutral": { "surfaces":"grey",   "accent":"#949494" },
     "slate":   { "surfaces":"slate",  "accent":"#7d93ad" },
     "plum":    { "surfaces":"plum",   "accent":"#a288b0" }
   },
@@ -574,7 +577,7 @@ and nothing else: a control has no compositing fallback for them to choose betwe
   "elementShape":   { "rounded": { "button":8 } },
   "decorationShape":{ "rounded": { "titlebar":10 } },
   "buttonStyles": {
-    "windows": { "plateRadius":12, "closePlate":"#e0655f", "width":22, "height":22, "buttonSpacing":4,
+    "windows": { "plateRadius":12, "closePlate":"#ea5c55", "width":22, "height":22, "buttonSpacing":4,
                  "closeHover":"0.75", "plainHover":"0.18", "rest":"0.85", "…":"…" }
   },
   "opacity": { "panel":0.85, "popup":0.85, "tooltip":0, "button":0.85 }

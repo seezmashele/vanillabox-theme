@@ -163,7 +163,7 @@ that colour deliberately and stops standing off the popups it appears over.
 
 A colour is a surface tint and an accent chosen together, not two separate questions. Accents match
 their surfaces in temperature, so each variant reads as one decision. Neutral is the quietest of
-them — grey surfaces under a warm tan accent — and the tinted two each carry the tint through the
+them — grey surfaces under a grey accent, with no colour anywhere — and the tinted two each carry the tint through the
 surfaces, the selection colour and the titlebar alike.
 
 There is no component checklist. Choosing a colour is already choosing a colour scheme, and the
