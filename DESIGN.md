@@ -811,14 +811,16 @@ but applets draw it inside the panel and on the desktop, where a shadow would be
 one. `TestOnlyDialogsCastAShadow` pins that. The `opaque/` and `solid/` copies carry the shadow too:
 the popup transparency toggle is about the surface, not the shadow under it.
 
-**The field is a single blurred box** the shape of the popup, pushed down 3px, at 0.4 strength with
-a blur radius of 12 — `popupShadow` in the tokens, with `radius` in Breeze's convention of
+**The field is a single blurred box** the shape of the popup, shrunk 3px inside its outline, pushed
+down 3px, at 0.45 strength with a blur radius of 24 — `popupShadow` in the tokens, with `radius` in Breeze's convention of
 `stdDev = radius / 2`. It started as Breeze's own popup shadow, measured off its
 `dialogs/background.svgz` (a quarter strength, radius 6, 2px down), and that could not be seen in
 use. The launcher and the tray popups mostly open over dark windows about as bright as the popup
 itself, and a quarter-strength shadow darkened that backdrop by four levels. Checked on a live
 desktop, the shadow was there and simply below notice. The shipped values darken the same backdrop
-by about eight levels at the side and eleven below, and reach twice as far;
+by about 7 levels at the side and 9 below, and reach about three times as far. The inset holds the
+box back from the edges so the shadow gathers below the popup rather than haloing around it; the
+box stays concentric with the popup, its corners keeping the popup's centres at a radius 3px less;
 `TestPopupShadowShowsOnDarkBackdrops` holds that floor. It stays lighter than the window shadow,
 whose two layers are stronger and wider — a popup is small and sits against a panel.
 
@@ -828,20 +830,32 @@ edge. Breeze leaves that part of its tiles empty; these cut out the popup's roun
 exactly, and `TestPopupShadowLeavesThePopupClear` maps every point of every shadow shape back onto
 the popup to prove none lands inside it.
 
-**Corners are radial, not a product of two edges.** The decoration's shadow is a blurred rectangle,
-which is separable and drawn as the product of a horizontal and a vertical profile. The popup is
-rounded at 10px, and a rectangle's shadow would put a darker blob outside each corner where the
-popup has curved away. With the corner radius comfortably larger than the blur, the shadow near a
-corner is the profile of the distance to the arc, so each corner tile carries a radial gradient
-centred on the box's own corner, and linear gradients past it where the nearest part of the box is
-a straight edge.
+**Corners are a product of two edges, drawn in rows.** A blurred rectangle is separable: its field is
+the profile across a side edge times the profile across the top or bottom, which is also how the
+window decoration's shadow is drawn. The box here is rounded, but its corners are the popup's less
+the inset — 7px — against a blur with a standard deviation of 12, and at that scale the rounding
+moves the field by about a level. The first version treated a corner as radial about its arc
+instead, the distance to the arc through one profile. That is only right while the arc is large
+against the blur, and here it made the corners twice as dark as a true blur, 38/255 where the blur
+gives 20 — dark patches at the four corners over a light wallpaper. It had been a smaller error at
+the earlier, tighter settings too, and went unnoticed because the check it was measured against used
+the same approximation. The corners are now within about a level and a half of a numerically
+integrated blur of the rounded inset box, rendered through Qt's own SVG renderer.
+
+SVG cannot multiply two gradients, but it can scale one. A corner tile is one-pixel rows, each
+carrying the horizontal profile and dimmed by the vertical profile at that row with `opacity` — not
+`fill-opacity`, which the install tests reserve for a translucent surface. Each row is the band of
+the cut-out outline it covers, so the popup's arc is still cut exactly.
 
 The sizes all follow from the tokens and the popup's radius. The margin is three standard
-deviations plus the offset, past which the profile is under a thousandth of its strength
-(`TestPopupShadowSettlesInItsMargin`). A tile is that margin plus the corner radius plus the offset,
-because a corner tile has to hold all of the curvature — the popup's arc and the box's, which the
-offset moves along the edge — or the stretched edge tile next to it would be asked for a curve it
-cannot vary along.
+deviations plus the offset, less the inset, past which the profile is under a thousandth of its
+strength (`TestPopupShadowSettlesInItsMargin`). A corner tile then has to reach along each edge until
+the blur has settled to the edge's own profile, to within half an alpha level, or the stretched edge
+tile beside it — which cannot vary along its length — meets it at a step. At a blur this wide that
+is the larger constraint: 38px along, for a 74px tile. It also sets a floor on the popups the shadow
+is exact for: one at least twice that, 76px, in the direction the tiles would otherwise overlap.
+Every launcher and tray popup is far larger; what KWin does with a smaller window's overlapping
+tiles has not been checked.
 
 #### The hover halo
 

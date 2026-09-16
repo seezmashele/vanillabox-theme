@@ -18,13 +18,19 @@ import (
 // tiles are empty there for the same reason, and these cut the popup's rounded
 // shape out exactly.
 //
-// The field is Breeze's popup shadow measured off its artwork: one blurred box,
-// pushed down a little, at a quarter strength.
+// The field is one blurred box the shape of the popup, held in from its edges by
+// an inset and pushed down a little.
 type dropShadow struct {
 	Color    string  // stop colour
 	Strength float64 // opacity where the field has settled, well inside the box
 	OffsetY  int     // how far the box sits below the popup
 	Radius   int     // blur radius, Breeze's convention: stdDev = Radius/2
+
+	// Inset shrinks the box inside the popup's outline on every side, before
+	// the offset moves it, so less of the blur shows past the edges. The box
+	// stays concentric with the popup: its corners keep the popup's centres and
+	// lose the inset from their radius.
+	Inset int
 
 	Corner float64 // the popup's corner radius, which the box shares
 }
@@ -40,18 +46,42 @@ func (s dropShadow) layer() shadowLayer {
 }
 
 // Margin is how far the shadow reaches outside the popup: three standard
-// deviations past the box, on the side the offset pushes it towards. Past that
-// the profile is under a thousandth of the strength.
+// deviations past the box, on the side the offset pushes it towards, less
+// whatever the inset holds the box back by. Past that the profile is under a
+// thousandth of the strength.
 func (s dropShadow) Margin() int {
-	return int(math.Ceil(1.5*float64(s.Radius))) + abs(s.OffsetY)
+	if m := int(math.Ceil(1.5*float64(s.Radius))) + abs(s.OffsetY) - s.Inset; m > 1 {
+		return m
+	}
+	return 1
 }
 
-// Tile is the size of every shadow tile. A corner tile has to hold all of the
-// curvature — the popup's arc and the box's, which the offset moves along the
-// edge — or the stretched edge tile beside it would be asked to draw a curve it
-// cannot vary along.
+// Tile is the size of every shadow tile.
+//
+// A corner tile has to reach along both edges until the blur has settled to the
+// edge's own profile, or the stretched edge tile beside it — which cannot vary
+// along its length — would meet it at a step. The box's straight edge starts the
+// inset in from the popup's, and at a top corner the offset moves it another
+// few pixels along; from there the field needs settle more pixels to come within
+// half a level of the edge. The tile also has to hold the popup's whole arc, for
+// the cut-out, which at a small blur is the larger of the two.
 func (s dropShadow) Tile() int {
-	return s.Margin() + int(math.Ceil(s.Corner)) + abs(s.OffsetY)
+	along := s.Inset + abs(s.OffsetY) + s.settle()
+	if arc := int(math.Ceil(s.Corner)) + abs(s.OffsetY); arc > along {
+		along = arc
+	}
+
+	return s.Margin() + along
+}
+
+// settle is how far past the start of the box's straight edge the field has to
+// run before what is still missing from it is under half an alpha level.
+func (s dropShadow) settle() int {
+	for d := 0; ; d++ {
+		if 255*s.Strength*s.layer().profile(float64(d)) < 0.5 {
+			return d
+		}
+	}
 }
 
 // alpha is the shadow's opacity d pixels outside the box's edge.
@@ -134,18 +164,17 @@ func (t shadowTile) path(poly []point) string {
 	return b.String()
 }
 
-// linear is a gradient along one local axis, from the tile's outer edge to the
-// popup's, carrying the profile at the box's distance for each point.
-func (t shadowTile) linear(id string, along func(k float64) point, dist func(k float64) float64) string {
-	m := float64(t.s.Margin())
-	a, z := along(0), along(m)
+// linear is a gradient along one local axis from the tile's outer edge over
+// length pixels, carrying the profile at the box's distance for each point.
+func (t shadowTile) linear(id string, length float64, along func(k float64) point, dist func(k float64) float64) string {
+	a, z := along(0), along(length)
 
 	var b strings.Builder
 	fmt.Fprintf(&b, `<linearGradient id="%s" gradientUnits="userSpaceOnUse" x1="%s" y1="%s" x2="%s" y2="%s">`,
 		id, n(a.X), n(a.Y), n(z.X), n(z.Y))
-	for k := 0.0; k <= m; k += sampleStep {
+	for k := 0.0; k <= length; k += sampleStep {
 		fmt.Fprintf(&b, `<stop offset="%s" stop-color="%s" stop-opacity="%s"/>`,
-			n(k/m), t.s.Color, n(t.s.alpha(dist(k))))
+			n(k/length), t.s.Color, n(t.s.alpha(dist(k))))
 	}
 	b.WriteString("</linearGradient>")
 
@@ -172,15 +201,17 @@ func (t shadowTile) render(corner bool) (defs []string, element string) {
 		return fmt.Sprintf(`<path d="%s" fill="url(#%s)"/>`, d, grad)
 	}
 
-	// Distance outside the box's straight edges, in local coordinates.
-	outsideV := func(v float64) float64 { return (m + t.e) - v }
-	outsideU := func(u float64) float64 { return m - u }
+	// Distance outside the box's straight edges, in local coordinates. The box
+	// starts the inset further in than the popup does.
+	in := float64(s.Inset)
+	outsideV := func(v float64) float64 { return (m + t.e + in) - v }
+	outsideU := func(u float64) float64 { return (m + in) - u }
 
 	if !corner {
 		// An edge tile varies along v only; left and right tiles are drawn with
 		// u and v swapped by place, so this one shape serves all four.
 		band := []point{{0, 0}, {size, 0}, {size, m}, {0, m}}
-		defs = append(defs, t.linear(id("edge"),
+		defs = append(defs, t.linear(id("edge"), m,
 			func(k float64) point { return t.place(0, k) }, outsideV))
 
 		return defs, fmt.Sprintf(`<g id="shadow-%s">%s%s</g>`, t.name, box, shape(t.path(band), id("edge")))
@@ -195,34 +226,34 @@ func (t shadowTile) render(corner bool) (defs []string, element string) {
 	}
 	outside = append(outside, point{m, cvPopup}, point{m, size}, point{0, size})
 
-	// The box's own corner centre, moved along v by the offset. Past it on
-	// either axis the nearest part of the box is a straight edge; inside both
-	// it is the arc, and the field is radial about this point.
-	cv := m + r + t.e
+	// The field is a blurred rectangle, which is separable: the product of the
+	// profile across the box's side edge and the profile across its top or
+	// bottom. The box's own corners are the popup's less the inset, and at the
+	// blur this shadow uses that rounding changes the field by about a level —
+	// treating the corner as radial about its arc instead made it twice as dark.
+	//
+	// SVG cannot multiply two gradients, but it can scale one, so the tile is
+	// drawn as one-pixel rows: each carries the horizontal profile and is dimmed
+	// by the vertical one at that row, as the window decoration's corners are.
+	// Each row is the band of the cut-out outline it covers, so the popup's arc
+	// stays exact.
+	defs = append(defs, t.linear(id("u"), size,
+		func(k float64) point { return t.place(k, 0) }, outsideU))
 
-	radial := clipV(clipU(outside, cu, true), cv, true)
-	alongV := clipU(outside, cu, false)
-	alongU := clipV(clipU(outside, cu, true), cv, false)
+	var rows strings.Builder
+	for k := 0.0; k < size; k++ {
+		o := s.layer().profile(outsideV(k + 0.5))
+		if o*s.Strength*255 < 0.05 {
+			continue
+		}
 
-	c := t.place(cu, cv)
-	reach := r + 1.5*float64(s.Radius) + math.Abs(t.e) + 1
-
-	var g strings.Builder
-	fmt.Fprintf(&g, `<radialGradient id="%s" gradientUnits="userSpaceOnUse" cx="%s" cy="%s" r="%s">`,
-		id("arc"), n(c.X), n(c.Y), n(reach))
-	for k := 0.0; k <= reach; k += sampleStep {
-		fmt.Fprintf(&g, `<stop offset="%s" stop-color="%s" stop-opacity="%s"/>`,
-			n(k/reach), s.Color, n(s.alpha(k-r)))
+		band := clipV(clipV(outside, k, false), k+1, true)
+		if d := t.path(band); d != "" {
+			fmt.Fprintf(&rows, `<path d="%s" fill="url(#%s)" opacity="%s"/>`, d, id("u"), n(o))
+		}
 	}
-	g.WriteString("</radialGradient>")
 
-	defs = append(defs, g.String(),
-		t.linear(id("v"), func(k float64) point { return t.place(0, k) }, outsideV),
-		t.linear(id("u"), func(k float64) point { return t.place(k, 0) }, outsideU),
-	)
-
-	element = fmt.Sprintf(`<g id="shadow-%s">%s%s%s%s</g>`, t.name, box,
-		shape(t.path(radial), id("arc")), shape(t.path(alongV), id("v")), shape(t.path(alongU), id("u")))
+	element = fmt.Sprintf(`<g id="shadow-%s">%s%s</g>`, t.name, box, rows.String())
 
 	return defs, element
 }

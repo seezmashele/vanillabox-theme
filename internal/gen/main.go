@@ -45,6 +45,7 @@ type popupShadowSpec struct {
 	Strength float64 `json:"strength"`
 	OffsetY  int     `json:"offsetY"`
 	Radius   int     `json:"radius"`
+	Inset    int     `json:"inset"`
 }
 
 type shadowSpec struct {
@@ -597,7 +598,7 @@ func frames(tk *tokens, palette map[string]string, radii map[string]float64, tra
 	dialog.DropShadow = &dropShadow{
 		Color: tk.PopupShadow.Color, Strength: tk.PopupShadow.Strength,
 		OffsetY: tk.PopupShadow.OffsetY, Radius: tk.PopupShadow.Radius,
-		Corner: radii["popup"],
+		Inset: tk.PopupShadow.Inset, Corner: radii["popup"],
 	}
 
 	return map[string]string{

@@ -1319,7 +1319,7 @@ func popupShadow(t *testing.T) dropShadow {
 
 	return dropShadow{
 		Color: p.Color, Strength: p.Strength, OffsetY: p.OffsetY, Radius: p.Radius,
-		Corner: tk.ContainerShape[defaultContainers]["popup"],
+		Inset: p.Inset, Corner: tk.ContainerShape[defaultContainers]["popup"],
 	}
 }
 
@@ -1368,7 +1368,10 @@ func TestPopupShadowLeavesThePopupClear(t *testing.T) {
 	svg := (&frame{Size: 44, Canvas: 60, Tile: 14, Radius: s.Corner, DropShadow: &s}).render()
 
 	m, size, r := float64(s.Margin()), float64(s.Tile()), s.Corner
-	const tolerance = 0.01
+
+	// The arc is cut out as a polygon, whose chords sit inside the true circle
+	// by at most their sagitta; a row crossing a chord lands a point that far in.
+	tolerance := r*(1-math.Cos(math.Pi/(4*dropShadowArc))) + 0.001
 
 	// inside reports whether a point in corner-relative coordinates — both axes
 	// running inwards from the tile's outer edges — lies strictly within the
@@ -1435,12 +1438,12 @@ func TestPopupShadowLeavesThePopupClear(t *testing.T) {
 // the profile still holds there is cut off in a hard line.
 func TestPopupShadowSettlesInItsMargin(t *testing.T) {
 	s := popupShadow(t)
-	m, e := float64(s.Margin()), float64(s.OffsetY)
+	m, e, in := float64(s.Margin()), float64(s.OffsetY), float64(s.Inset)
 
 	for side, d := range map[string]float64{
-		"top":    m + e, // the offset moves the box away from the top edge
-		"bottom": m - e,
-		"side":   m,
+		"top":    m + e + in, // the offset moves the box away from the top edge
+		"bottom": m - e + in,
+		"side":   m + in,
 	} {
 		if a := s.alpha(d); a*255 >= 0.5 {
 			t.Errorf("%s: the shadow is still %.2f/255 at the edge of its %v px margin", side, a*255, m)
@@ -1456,18 +1459,20 @@ func TestPopupShadowSettlesInItsMargin(t *testing.T) {
 // each side.
 func TestPopupShadowShowsOnDarkBackdrops(t *testing.T) {
 	s := popupShadow(t)
-	e := float64(s.OffsetY)
+	e, in := float64(s.OffsetY), float64(s.Inset)
 
 	backdrop := rgbOf(t, testTokens(t).Surfaces["grey"]["background"])[1]
 
+	// The floors sit just above what Breeze's own shadow manages on the same
+	// backdrop — 7, 4.4 and 2.1 levels — so it cannot drift back to that.
 	for _, c := range []struct {
 		name string
 		d    float64 // distance outside the box of the first pixel past the popup
 		want float64 // levels darker, at least
 	}{
-		{"bottom", 0.5 - e, 9},
-		{"side", 0.5, 6},
-		{"top", 0.5 + e, 3},
+		{"bottom", 0.5 - e + in, 8},
+		{"side", 0.5 + in, 5},
+		{"top", 0.5 + e + in, 2.5},
 	} {
 		if got := backdrop * s.alpha(c.d); got < c.want {
 			t.Errorf("%s: the shadow darkens a %.0f backdrop by %.1f levels just outside the popup, want at least %.0f",
