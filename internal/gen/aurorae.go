@@ -19,10 +19,10 @@ const (
 // decorationNote explains why the bottom corners are square. It is reproduced
 // verbatim because the constraint it records is not obvious from the artwork,
 // and someone will otherwise try to round them again.
-const decorationNote = `<!-- Corner tiles are 12 wide so the top two corners carry a 12px radius. Each
-     corner draws the border colour first and lays the background over it inset
-     by 1px at radius 11, so the two antialiased edges stay concentric and no
-     seam shows along the curve.
+const decorationNote = `<!-- The top two corners carry a 10px radius, drawn inside a corner tile at
+     least that wide. Each corner draws the border colour first and lays the
+     background over it inset by 1px at radius 9, so the two antialiased edges
+     stay concentric and no seam shows along the curve.
 
      The bottom corners are square, and deliberately so. Rounding them needs a
      bottom border to draw the curve in, and anything narrower than the radius

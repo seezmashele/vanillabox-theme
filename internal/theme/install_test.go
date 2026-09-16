@@ -257,8 +257,6 @@ func TestPaletteCarriesItsAccent(t *testing.T) {
 		"neutral": {"41,41,41", "174,142,108"},
 		"slate":   {"39,42,47", "125,147,173"},
 		"plum":    {"43,39,45", "162,136,176"},
-		"rose":    {"43,39,41", "192,122,140"},
-		"forest":  {"37,43,37", "74,109,65"},
 	}
 
 	for name, want := range palettes {
@@ -296,15 +294,12 @@ func TestPaletteCarriesItsAccent(t *testing.T) {
 	}
 }
 
-// TestForestInvertsItsSelectionText is the one place a palette moves a
-// foreground. Its accent is dark enough that the shared dark on-highlight
-// colour stops reading on it, so forest alone takes the light one — and the
-// four that do not are the assertion that the override stayed local to it.
-func TestForestInvertsItsSelectionText(t *testing.T) {
-	const (
-		light = "232,228,221"
-		dark  = "31,31,31"
-	)
+// TestSelectionTextStaysShared checks that the on-highlight foreground is held
+// still across the shipped palettes. A palette may override it for an accent
+// too dark to carry the shared colour, but none ships one, so an installed
+// scheme taking anything else would be an override that leaked.
+func TestSelectionTextStaysShared(t *testing.T) {
+	const dark = "31,31,31"
 
 	selection := func(name string) string {
 		_, style := installShipped(t, func(ch Choices) { ch.Values["palette"] = name })
@@ -318,25 +313,21 @@ func TestForestInvertsItsSelectionText(t *testing.T) {
 		return after
 	}
 
-	if got := selection("forest"); !strings.Contains(got, "ForegroundNormal="+light) {
-		t.Errorf("forest selection text is not the light foreground %s", light)
-	}
-
-	for _, name := range []string{"neutral", "slate", "plum", "rose"} {
+	for _, name := range []string{"neutral", "slate", "plum"} {
 		if got := selection(name); !strings.Contains(got, "ForegroundNormal="+dark) {
 			t.Errorf("%s selection text is not the shared dark foreground %s", name, dark)
 		}
 	}
 }
 
-// TestPalettesAreDistinct is the cheap guard the merged axis needs: five names
-// in the menu have to be five colour schemes. A palette that stopped reaching
+// TestPalettesAreDistinct is the cheap guard the merged axis needs: every name
+// in the menu has to be its own colour scheme. A palette that stopped reaching
 // the scheme would silently fall back to another one's colours, and the option
 // would still appear to work.
 func TestPalettesAreDistinct(t *testing.T) {
 	seen := map[string]string{}
 
-	for _, name := range []string{"neutral", "slate", "plum", "rose", "forest"} {
+	for _, name := range []string{"neutral", "slate", "plum"} {
 		_, style := installShipped(t, func(ch Choices) { ch.Values["palette"] = name })
 		colors := readFile(t, filepath.Join(style, "colors"))
 
@@ -547,11 +538,10 @@ func TestButtonStyleSwapsTheWholeTitlebarSet(t *testing.T) {
 			}
 
 			rc := readFile(t, filepath.Join(dst, "VanillaBoxDarkrc"))
-			// The margin centres the button in the 30px titlebar — (30-26)/2 and
-			// (30-20)/2 — plus whatever optical nudge the style declares. Traffic
-			// traffic lights sit a pixel above centre; symbols sit flush with the top of
-			// the titlebar, so the hover plate has no gap above it.
-			width, margin := "ButtonWidth=28", "ButtonMarginTop=0"
+			// The margin centres the button in the 30px titlebar — (30-24)/2 and
+			// (30-22)/2 — plus whatever optical nudge the style declares. Both
+			// styles are round, and both sit a pixel above centre.
+			width, margin := "ButtonWidth=24", "ButtonMarginTop=2"
 			if circles {
 				width, margin = "ButtonWidth=22", "ButtonMarginTop=3"
 			}
@@ -577,9 +567,9 @@ func TestTitlebarButtonMetrics(t *testing.T) {
 		box, margin, menu int
 		mark              string // what the artwork must draw at that size
 	}{
-		// 13x13px symbol on a 28x28 box, flush with the top of the titlebar so
-		// the hover plate has no gap above it.
-		"windows": {box: 28, margin: 0, menu: 20, mark: `scale(0.04352678571428571)`},
+		// 11x11px symbol on a 24x24 box under a circular hover plate, a pixel
+		// above centre like the traffic lights.
+		"windows": {box: 24, margin: 2, menu: 20, mark: `scale(0.04296875)`},
 		// 11px circle on a 22x22 box, a pixel above centre.
 		"mac": {box: 22, margin: 3, menu: 16, mark: `<circle cx="12" cy="12" r="6"`},
 	}
@@ -622,8 +612,15 @@ func TestTitlebarButtonMetrics(t *testing.T) {
 
 			// A non-square box would stretch the mark, which is the reason both
 			// dimensions are asserted rather than just the width.
-			if !strings.Contains(readFile(t, filepath.Join(dst, "close.svg")), want.mark) {
+			closeSVG := readFile(t, filepath.Join(dst, "close.svg"))
+			if !strings.Contains(closeSVG, want.mark) {
 				t.Errorf("close.svg does not draw its mark at the tuned size (%s)", want.mark)
+			}
+
+			// The symbols' hover plate is round: a corner radius of half the
+			// 24-unit tile turns the rect into a circle.
+			if style == "windows" && !strings.Contains(closeSVG, `width="24" height="24" fill="#e0655f" rx="12" ry="12"`) {
+				t.Error("close.svg hover plate is not a circle (want rx=ry=12 on the 24-unit tile)")
 			}
 		})
 	}

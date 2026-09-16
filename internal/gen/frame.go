@@ -46,11 +46,15 @@ const maskCornerInset = 1
 // Tile has to be at least Radius: the corner arc is drawn inside its own tile,
 // and a radius overflowing it would spill into the stretched edge tile beside.
 //
-// Two idioms appear in the theme and they are not interchangeable. Dialog-like
-// frames leave a straight run between the corner arc and the tile edge, because
-// Tile exceeds Radius. The panel's tiles are exactly the radius, so its corners
-// collapse to an arc and a single closing line. Emitting one from the other's
-// template would change the path data, so each keeps its own builder.
+// Two idioms are possible and they are not interchangeable. Dialog-like frames
+// leave a straight run between the corner arc and the tile edge, because Tile
+// exceeds Radius. A frame whose tiles are exactly its radius has no such run, so
+// its corners collapse to an arc and a single closing line. Emitting one from
+// the other's template would change the path data, so each keeps its own
+// builder, and corners() picks between them on Tile against Radius. Every frame
+// the theme ships is currently dialog-like — the panel's tile was exactly its
+// radius while both were 12 — but the radii are tokens, so the collapsed idiom
+// stays reachable and stays tested.
 type frame struct {
 	Size   int     // the frame square: 44 for dialogs, 40 for the panel
 	Canvas int     // SVG height, which leaves room for the hint row

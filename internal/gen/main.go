@@ -218,7 +218,7 @@ const (
 	defaultContainers = "rounded"
 	defaultElements   = "rounded"
 	defaultTitlebar   = "rounded"
-	defaultButtons    = "mac"
+	defaultButtons    = "windows"
 
 	// Shadows ship on. Aurorae draws them from the decoration's own padding, so
 	// the cost is a band of translucent pixels around every window rather than

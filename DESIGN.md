@@ -47,22 +47,23 @@ than a radius tuned per component.
 
 | Surface | Radius | Token |
 | --- | --- | --- |
-| Titlebar (top corners) | 12 | `decorationShape.rounded.titlebar` |
-| Panel strip | 12 | `containerShape.rounded.panel` |
-| Popups, menus, applet backgrounds | 12 | `containerShape.rounded.popup` |
+| Titlebar (top corners) | 10 | `decorationShape.rounded.titlebar` |
+| Panel strip | 10 | `containerShape.rounded.panel` |
+| Popups, menus, applet backgrounds | 10 | `containerShape.rounded.popup` |
 | Tooltips | 8 | `containerShape.rounded.tooltip` |
 | Buttons, inputs, list items | 8 | `elementShape.rounded.button` |
-| Titlebar button plate (Symbols) | 8 | `buttonStyles.windows.plateRadius` |
+| Titlebar button plate (Symbols) | circle — 12 on the 24-unit tile | `buttonStyles.windows.plateRadius` |
 
-Two values, shared. What the eye reads as a surface takes 12 — the titlebar, the panel strip, and
+Two values, shared. What the eye reads as a surface takes 10 — the titlebar, the panel strip, and
 the popups and applet backgrounds that are surfaces in their own right, the start menu and the
 system tray among them. What sits *on* a surface takes 8: tooltips, buttons, inputs, list items.
 That a popup and the panel land on the same figure is the point rather than a collision. A theme
 reads as one system when its corners come from a scale, not when every component argues its own
-case.
+case. The titlebar buttons sit outside the scale: both styles are circles, like the traffic lights
+they sit beside as an alternative, so their radius is simply half the button.
 
 The tooltip is the instructive one. It is a container, and it takes the small radius anyway,
-because it is a strip of text rather than a surface — 12 on something two lines tall is a lozenge,
+because it is a strip of text rather than a surface — 10 on something two lines tall is a lozenge,
 and the radius has to be read against what carries it rather than against what the file is called.
 It has a token of its own, `containerShape.rounded.tooltip`, for exactly that reason: it shared the
 popup's until the popups grew.
@@ -111,10 +112,10 @@ independent of that. The window buttons are the axis this still governs.
 A palette is a surface set and the accent that goes with it, chosen together. Surfaces and
 highlights were two independent axes at first, on the reasoning that they are two questions. They
 are — but a curated pair is a defensible answer to both, and eighteen combinations is a great deal
-of menu for something most people set once and never revisit. Five named variants say more about
+of menu for something most people set once and never revisit. A few named variants say more about
 what the theme is for than eighteen coordinates do.
 
-The cost is real: rose surfaces with a steel accent is no longer reachable. If that turns out to
+The cost is real: plum surfaces with a steel accent is no longer reachable. If that turns out to
 matter the axes split again — the generator already writes a product elsewhere and would do it here
 without ceremony.
 
@@ -125,26 +126,25 @@ referenced by name — a set can then be shared, and renaming a variant does not
 colours it points at.
 
 A palette moves surfaces and its accent. Text, inactive text and the colour that sits on the
-highlight are held still across all five, because warm text on a blue surface reads as a mistake
+highlight are held still across every palette, because warm text on a blue surface reads as a mistake
 rather than as a variant.
 
-`onHighlight` is the one that does not survive the rule, and `forest` is why. An accent is the
-selection background — the only colour a palette moves that text sits *on* rather than beside — and
-at `#4a6d41` the shared dark on-highlight colour reads at 2.8:1, which is not a foreground. The
-light `text` colour reads at 4.7:1 on the same green. The crossover is around `#5c8452`: above it
-the dark colour wins, below it the light one does.
+`onHighlight` is the one that may not survive the rule. An accent is the selection background —
+the only colour a palette moves that text sits *on* rather than beside — and a dark enough accent
+stops carrying the shared dark on-highlight colour. A green at `#4a6d41`, which a forest palette
+once shipped, reads at 2.8:1 under it, which is not a foreground; the light `text` colour reads at
+4.7:1 on the same green.
 
-So a palette may override `onHighlight`, and only `forest` does. The alternative was moving the
-foregrounds for everyone, which is the question holding them still exists to avoid — and picking a
-green by what the selection text needed rather than by what the palette is called.
-`TestForestInvertsItsSelectionText` pins both halves: forest takes the light colour, and the other
-four are checked for still taking the dark one, because an override that leaked would look like a
-theme-wide change nobody asked for.
+So a palette may override `onHighlight`, and none of the shipped ones does. The alternative was
+moving the foregrounds for everyone, which is the question holding them still exists to avoid.
+`TestPaletteCanOverrideOnHighlight` keeps the override working and local to the palette that asks
+for it, and `TestSelectionTextStaysShared` checks every shipped palette still takes the dark one,
+because an override that leaked would look like a theme-wide change nobody asked for.
 
 The accent is also `ForegroundLink`, drawn *on* the background rather than under text, and that one
-has no override to hide behind. Forest links sit at 2.5:1 against its surfaces where the other four
-palettes are near 4.6:1. It is the price of the green: the link colour would have to stop being the
-accent to fix it, which would cost the theme the thing that makes an accent read as one decision.
+has no override to hide behind. A palette dark enough to need the light on-highlight colour would
+pay for it in its links too: the link colour would have to stop being the accent to fix it, which
+would cost the theme the thing that makes an accent read as one decision.
 
 That also keeps a palette almost free. The only artwork it repaints is `decoration.svg`, which
 paints the titlebar directly instead of deferring to the scheme; everything else either resolves
@@ -332,15 +332,15 @@ colour is a coherent look, just not the shipped one.
 
 Both are products with the palette rather than overlays, because each `colors` file carries the
 window background and there is no file to swap that does not also carry the tint —
-`variants/colors/app/{palette}-{sidebar}/` and `variants/colors/shell/{palette}-{panel-tint}/`, ten
-directories each for five palettes. `TestSidebarMovesOnlyTheWindowBackground` and
+`variants/colors/app/{palette}-{sidebar}/` and `variants/colors/shell/{palette}-{panel-tint}/`, six
+directories each for three palettes. `TestSidebarMovesOnlyTheWindowBackground` and
 `TestPanelTintMovesOnlyTheShell` pin which sections are allowed to move;
 `TestTheTwoSchemesTakeSeparateAxes` and `TestPanelTintAndSidebarAreSeparateInstalls` pin that
 neither axis reaches the other's file.
 
 Surfaces are written as explicit values per set, not derived by a hue or chroma transform. A
 computed shift behaves badly at the lightness of `#141414`, and the near-blacks want hand-tuning.
-Six surface roles across five sets is thirty numbers, plus one accent per palette.
+Six surface roles across three sets is eighteen numbers, plus one accent per palette.
 
 ## Accent
 
@@ -388,13 +388,13 @@ worth writing down. `TestTitlebarButtonMetrics` pins them.
 
 | | Symbols | Traffic lights |
 | --- | --- | --- |
-| Button box | 28 x 28 | 22 x 22 |
-| `glyphSize` / `circleRadius` | 13 | 6 |
-| **Rendered mark** | 13 x 13 px | 11 px across |
+| Button box | 24 x 24 | 22 x 22 |
+| `glyphSize` / `circleRadius` | 11 | 6 |
+| **Rendered mark** | 11 x 11 px | 11 px across |
 | `nudgeTop` | -1 | -1 |
-| `ButtonMarginTop` | 0 | 3 |
+| `ButtonMarginTop` | 2 | 3 |
 | `ButtonWidthMenu` | 20 | 16 |
-| Plate | square, no radius | n/a |
+| Plate | circle (`plateRadius` 12, 24 px across) | n/a |
 
 Both boxes are square on purpose. Aurorae scales the 24x24 tile to `ButtonWidth x ButtonHeight`, so
 a box of 28x26 stretched every symbol 7.7% wider than tall — a circle in a glyph stopped being a
@@ -418,8 +418,9 @@ corner of the window and wants more of a margin there than the buttons at the ot
 button that far from the top of the titlebar and leaves the remaining slack below it, so a zero
 margin sits every button high. `nudgeTop` is the optical correction on top of that arithmetic, and
 it is relative: changing a button height moves the centre, so the nudge has to be revisited to hold
-the same edge alignment. The symbols' -1 is what makes their hover plate sit flush against the
-titlebar's top border.
+the same edge alignment. Both styles are round and take the same -1, a pixel above centre. The
+symbols' -1 once made a square 28px plate sit flush against the titlebar's top border; now the
+plate is a smaller circle, it is an optical correction like the traffic lights' instead.
 
 The circles stay centred in their own tile so the hit area still matches what is drawn; it is the
 button box that moves.
@@ -480,7 +481,7 @@ That is worth remembering before concluding that a decoration edit did not work:
 installed `VanillaBoxDarkrc` first, and only then doubt the values.
 
 **The interaction model differs.** The Windows-style buttons are monochrome glyphs at rest that
-gain a square coloured plate on hover. The Mac style has no glyphs at all: three grey circles at rest,
+gain a round coloured plate on hover. The Mac style has no glyphs at all: three grey circles at rest,
 which take a muted traffic-light colour on hover. This is a per-style treatment, not a shared
 pattern with different values.
 
@@ -560,20 +561,19 @@ and nothing else: a control has no compositing fallback for them to choose betwe
   "surfaces": {
     "grey":   { "background":"#292929", "elevated":"#3d3d3d", "view":"#141414", "…":"…" },
     "slate":  { "background":"#272a2f", "…":"…" },
-    "forest": { "background":"#252b25", "…":"…" },
+    "plum":   { "background":"#2b272d", "…":"…" },
     "…":      "…"
   },
   "palettes": {
     "neutral": { "surfaces":"grey",   "accent":"#ae8e6c" },
     "slate":   { "surfaces":"slate",  "accent":"#7d93ad" },
-    "…":       "…",
-    "forest":  { "surfaces":"forest", "accent":"#4a6d41", "onHighlight":"#e8e4dd" }
+    "plum":    { "surfaces":"plum",   "accent":"#a288b0" }
   },
-  "containerShape": { "rounded": { "panel":10, "popup":8 } },
+  "containerShape": { "rounded": { "panel":10, "popup":10, "tooltip":8 } },
   "elementShape":   { "rounded": { "button":8 } },
   "decorationShape":{ "rounded": { "titlebar":10 } },
   "buttonStyles": {
-    "windows": { "plateRadius":8, "closePlate":"#e0655f", "width":28, "height":26,
+    "windows": { "plateRadius":12, "closePlate":"#e0655f", "width":24, "height":24,
                  "closeHover":"0.75", "plainHover":"0.18", "rest":"0.85", "…":"…" }
   },
   "opacity": { "panel":0.85, "popup":0.85, "tooltip":0, "button":0.85 }
@@ -653,14 +653,17 @@ in appearance, so they cannot be normalised without changing the committed bytes
 
 | Where | Construction |
 | --- | --- |
-| Popup and dialog frames | cubic, with a straight run between arc and tile edge (tile 14 > radius 12) |
+| Popup and dialog frames | cubic, with a straight run between arc and tile edge (tile 14 > radius 10) |
 | Tooltip frame | the same idiom at the small radius (tile 14 > radius 8) |
-| Panel frame | cubic, closing directly off the arc (tile 12 == radius 12) |
+| Panel frame | the same idiom again (tile 12 > radius 10) |
+| Any frame whose tile equals its radius | cubic, closing directly off the arc — none ships one now |
 | Buttons, inputs, list items | `A` arc commands, radius 8 |
 
-Both builders are live, and which one a frame gets is read off its geometry rather than its name.
-The panel has been through both: at radius 10 its tile exceeded its radius and it took the popup's
-idiom, and at 12 it meets it exactly and closes off the arc again. The mask corners branch on the
+Both builders are kept, and which one a frame gets is read off its geometry rather than its name.
+The panel has been through both: at radius 10 its tile exceeds its radius and it takes the popup's
+idiom, which is where it is now; at 12 it met it exactly and closed off the arc instead. No shipped
+frame reaches the collapsed builder at the current radii, so the mask tests carry a panel at 12
+to keep it covered. The mask corners branch on the
 same test for the same reason — a frame with no straight run has nowhere to put the step that
 [the mask inset](#the-mask-corners-are-a-pixel-smaller) otherwise sits on.
 
@@ -750,7 +753,7 @@ Three things about it are easy to get wrong:
 - **It goes through the stylesheet, not a literal colour.** The container artwork is generated once
   per shape, not per palette — `containers/` has a `rounded` and a `square` tree and no tint axis —
   because Plasma resolves `ColorScheme-*` classes at paint time. A literal border colour would bake
-  the default palette's edge into a file all five palettes share. The outline is
+  the default palette's edge into a file every palette shares. The outline is
   `ColorScheme-Text` at `0.1`, so it follows the tint like everything else.
 - **The mask copies stay whole.** `mask-*` is the blur region rather than artwork. An outline drawn
   into it would punch a ring out of the blur instead of showing up as a border, so the mask keeps
@@ -869,7 +872,7 @@ the reasoning that a card over arbitrary content should sit below the chrome aro
 right until the darker-panels option arrived and put the popups a tooltip appears over on exactly
 that colour. With that option on, a tooltip over a popup painted the popup's own colour and showed
 nothing but its outline. `surfaces.<set>.tooltip` is therefore written out per set, a step below
-`view`, and hand-tuned like every other surface: a percentage of `view` collapses the five sets into
+`view`, and hand-tuned like every other surface: a percentage of `view` collapses the sets into
 each other at that lightness and the tint stops being legible.
 
 ## Manifest

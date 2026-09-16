@@ -310,7 +310,7 @@ func TestPanelTintMovesOnlyTheShell(t *testing.T) {
 func TestTheTwoSchemesTakeSeparateAxes(t *testing.T) {
 	tk := testTokens(t)
 
-	for _, palette := range []string{defaultPalette, "forest"} {
+	for _, palette := range []string{defaultPalette, "plum"} {
 		app := make([]string, 0, 2)
 		for _, sidebar := range []string{sidebarWindow, sidebarView} {
 			s, err := appScheme(tk, palette, sidebar)
@@ -337,6 +337,37 @@ func TestTheTwoSchemesTakeSeparateAxes(t *testing.T) {
 		if shell[0] == shell[1] {
 			t.Errorf("%s: the panel choice leaves the shell scheme unchanged", palette)
 		}
+	}
+}
+
+// TestPaletteCanOverrideOnHighlight keeps the one per-palette foreground
+// override covered now that no shipped palette uses it. The override has to
+// reach the palette that asks for it and no other.
+func TestPaletteCanOverrideOnHighlight(t *testing.T) {
+	tk := testTokens(t)
+	const light = "#e8e4dd"
+
+	shared := tk.Foreground["onHighlight"]
+	if shared == light {
+		t.Fatalf("the shared onHighlight is already %s, so the override proves nothing", light)
+	}
+
+	tk.Palettes["dark-accent"] = palette{Surfaces: "grey", Accent: "#4a6d41", OnHighlight: light}
+
+	got, _, err := tk.colours("dark-accent")
+	if err != nil {
+		t.Fatalf("colours: %v", err)
+	}
+	if got["onHighlight"] != light {
+		t.Errorf("overriding palette takes onHighlight %s, want %s", got["onHighlight"], light)
+	}
+
+	got, _, err = tk.colours(defaultPalette)
+	if err != nil {
+		t.Fatalf("colours: %v", err)
+	}
+	if got["onHighlight"] != shared {
+		t.Errorf("%s takes onHighlight %s, want the shared %s", defaultPalette, got["onHighlight"], shared)
 	}
 }
 
@@ -1112,9 +1143,11 @@ func TestEveryTranslucentFrameCarriesAMask(t *testing.T) {
 	}
 }
 
-// maskedFrames is every frame shape the theme masks, at the radii it ships.
-// Both corner idioms are covered: the popup and the tooltip have tiles that
-// exceed their radius, the panel's tile is exactly its radius.
+// maskedFrames is every frame shape the theme masks, at the radii it ships,
+// plus the one corner idiom no shipped frame currently reaches. Every shipped
+// frame's tile exceeds its radius; "panel-collapsed" keeps the panel's tile at
+// exactly its radius, so the builder for that idiom stays covered while the
+// tokens do not happen to select it.
 func maskedFrames() []struct {
 	name string
 	frame
@@ -1123,9 +1156,10 @@ func maskedFrames() []struct {
 		name string
 		frame
 	}{
-		{"popup", frame{Size: 44, Canvas: 60, Tile: 14, Radius: 12, Fallback: "#292929", Mask: true, HintSize: 8, HintY: 48}},
+		{"popup", frame{Size: 44, Canvas: 60, Tile: 14, Radius: 10, Fallback: "#292929", Mask: true, HintSize: 8, HintY: 48}},
 		{"tooltip", frame{Size: 44, Canvas: 60, Tile: 14, Radius: 8, Fallback: "#292929", Mask: true, HintSize: 4, HintY: 48}},
-		{"panel", frame{Size: 40, Canvas: 56, Tile: 12, Radius: 12, Fallback: "#292929", Mask: true, HintSize: 2, HintY: 44}},
+		{"panel", frame{Size: 40, Canvas: 56, Tile: 12, Radius: 10, Fallback: "#292929", Mask: true, HintSize: 2, HintY: 44}},
+		{"panel-collapsed", frame{Size: 40, Canvas: 56, Tile: 12, Radius: 12, Fallback: "#292929", Mask: true, HintSize: 2, HintY: 44}},
 	}
 }
 

@@ -113,7 +113,7 @@ pair the page is actually about: the panel background and the elevated surface a
 colours are display only, and a test checks them against `spec/tokens.json` so a box cannot show
 one colour while the install writes another.
 
-They are genuinely subtle. The five panel colours sit within 3–11 units of each other out of a
+They are genuinely subtle. The three panel colours sit within 5–6 units of each other out of a
 possible 441, because a tinted dark surface is a dark surface first — that closeness is the design
 rather than a rendering problem, and it is why the boxes are two cells wide and come in pairs.
 
@@ -125,7 +125,7 @@ and every other page with them.
 
 | Preference | Values | Changes |
 | --- | --- | --- |
-| Surfaces | Neutral, Slate, Plum, Rose, Forest | the tint of every surface — and, quietly, the accent that goes with it |
+| Surfaces | Neutral, Slate, Plum | the tint of every surface — and, quietly, the accent that goes with it |
 | Sidebar background | Match the file list, Match the window | places panels in Dolphin, Kate and friends — and every other window background |
 | Darker panels & popups | Match the toolbars, Darker | the panel strip, the launcher and applet popups |
 | Window buttons | Symbols, Traffic lights | close, minimise and maximise |
@@ -138,9 +138,9 @@ A choice's default is `"defaultValue"` in `theme.json` rather than whichever val
 listed first, and the two are free to disagree: the cursor opens on the value already selected, not
 on the first line, so a choice can list its values in whatever order reads best. Every choice
 happens to list the value it installs first. Accepting every prompt gives Neutral, a sidebar merged
-into the file list, a panel at the toolbar colour, traffic-light window buttons, and a soft shadow
+into the file list, a panel at the toolbar colour, symbol window buttons, and a soft shadow
 under every window. The corners are not among the prompts: the theme rounds throughout, titlebars
-panels and popups to 12, and tooltips, buttons and inputs to 8.
+panels and popups to 10, and tooltips, buttons and inputs to 8.
 
 **Sidebar background** is blunter than its name suggests, and it is the one default worth reading
 before accepting. KDE colour schemes have no sidebar role: a places panel paints with the *window*
@@ -163,7 +163,7 @@ that colour deliberately and stops standing off the popups it appears over.
 
 A colour is a surface tint and an accent chosen together, not two separate questions. Accents match
 their surfaces in temperature, so each variant reads as one decision. Neutral is the quietest of
-them — grey surfaces under a warm tan accent — and the tinted four each carry the tint through the
+them — grey surfaces under a warm tan accent — and the tinted two each carry the tint through the
 surfaces, the selection colour and the titlebar alike.
 
 There is no component checklist. Choosing a colour is already choosing a colour scheme, and the
@@ -173,7 +173,7 @@ theme, icon theme or splash screen. The review screen lists every file destinati
 is written, and names anything it is leaving out.
 
 Corners are not a preference. The theme rounds, from one small scale rather than a radius picked
-per component: 12 for the surfaces — the titlebar, the panel strip, popups and applet backgrounds —
+per component: 10 for the surfaces — the titlebar, the panel strip, popups and applet backgrounds —
 and 8 for what sits on one: tooltips, buttons and inputs.
 Two values, shared, is what makes the corners read as one system instead of a set of separately
 tuned components — and a shape switch is the thing most likely to break that, since half the

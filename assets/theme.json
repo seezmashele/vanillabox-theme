@@ -49,16 +49,6 @@
               "id": "plum",
               "name": "Plum",
               "swatch": ["#2b272d", "#3b353f"]
-            },
-            {
-              "id": "rose",
-              "name": "Rose",
-              "swatch": ["#2b2729", "#3b3538"]
-            },
-            {
-              "id": "forest",
-              "name": "Forest",
-              "swatch": ["#252b25", "#343c34"]
             }
           ]
         },
@@ -187,22 +177,22 @@
           "group": "Shape",
           "order": 1,
           "kind": "select",
-          "defaultValue": "mac",
+          "defaultValue": "windows",
           "values": [
-            {
-              "id": "mac",
-              "name": "Traffic lights",
-              "description": "(similar to Mac)",
-              "overlay": {
-                "from": "variants/buttons/mac-{shadows}"
-              }
-            },
             {
               "id": "windows",
               "name": "Symbols",
               "description": "(similar to Windows)",
               "overlay": {
                 "from": "variants/buttons/windows-{shadows}"
+              }
+            },
+            {
+              "id": "mac",
+              "name": "Traffic lights",
+              "description": "(similar to Mac)",
+              "overlay": {
+                "from": "variants/buttons/mac-{shadows}"
               }
             }
           ]
