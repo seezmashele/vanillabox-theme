@@ -538,10 +538,10 @@ func TestButtonStyleSwapsTheWholeTitlebarSet(t *testing.T) {
 			}
 
 			rc := readFile(t, filepath.Join(dst, "VanillaBoxDarkrc"))
-			// The margin centres the button in the 30px titlebar — (30-24)/2 and
-			// (30-22)/2 — plus whatever optical nudge the style declares. Both
+			// The margin centres the button in the 30px titlebar — (30-22)/2 for
+			// both — plus whatever optical nudge the style declares. Both
 			// styles are round, and both sit a pixel above centre.
-			width, margin := "ButtonWidth=24", "ButtonMarginTop=2"
+			width, margin := "ButtonWidth=22", "ButtonMarginTop=3"
 			if circles {
 				width, margin = "ButtonWidth=22", "ButtonMarginTop=3"
 			}
@@ -564,14 +564,14 @@ func TestButtonStyleSwapsTheWholeTitlebarSet(t *testing.T) {
 // would just be the wrong size or sitting a pixel off. See DESIGN.md.
 func TestTitlebarButtonMetrics(t *testing.T) {
 	metrics := map[string]struct {
-		box, margin, menu int
-		mark              string // what the artwork must draw at that size
+		box, margin, menu, spacing int
+		mark                       string // what the artwork must draw at that size
 	}{
-		// 11x11px symbol on a 24x24 box under a circular hover plate, a pixel
+		// 12x12px symbol on a 22x22 box under a circular hover plate, a pixel
 		// above centre like the traffic lights.
-		"windows": {box: 24, margin: 2, menu: 20, mark: `scale(0.04296875)`},
+		"windows": {box: 22, margin: 3, menu: 20, spacing: 4, mark: `scale(0.05113636363636364)`},
 		// 11px circle on a 22x22 box, a pixel above centre.
-		"mac": {box: 22, margin: 3, menu: 16, mark: `<circle cx="12" cy="12" r="6"`},
+		"mac": {box: 22, margin: 3, menu: 16, spacing: 0, mark: `<circle cx="12" cy="12" r="6"`},
 	}
 
 	for style, want := range metrics {
@@ -589,6 +589,8 @@ func TestTitlebarButtonMetrics(t *testing.T) {
 				// is narrower than the row is tall so the leftover height gives it
 				// room above and below.
 				fmt.Sprintf("ButtonWidthMenu=%d", want.menu),
+				// The symbols' round plates would touch edge to edge without a gap.
+				fmt.Sprintf("ButtonSpacing=%d", want.spacing),
 				fmt.Sprintf("ButtonMarginTop=%d", want.margin),
 				// Maximising a window lays the titlebar out from a separate set of
 				// keys that default to zero, which moved every button. These have

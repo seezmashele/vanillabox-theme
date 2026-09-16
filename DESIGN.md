@@ -388,13 +388,14 @@ worth writing down. `TestTitlebarButtonMetrics` pins them.
 
 | | Symbols | Traffic lights |
 | --- | --- | --- |
-| Button box | 24 x 24 | 22 x 22 |
-| `glyphSize` / `circleRadius` | 11 | 6 |
-| **Rendered mark** | 11 x 11 px | 11 px across |
+| Button box | 22 x 22 | 22 x 22 |
+| `glyphSize` / `circleRadius` | 12 | 6 |
+| **Rendered mark** | 12 x 12 px | 11 px across |
 | `nudgeTop` | -1 | -1 |
-| `ButtonMarginTop` | 2 | 3 |
+| `ButtonMarginTop` | 3 | 3 |
 | `ButtonWidthMenu` | 20 | 16 |
-| Plate | circle (`plateRadius` 12, 24 px across) | n/a |
+| `ButtonSpacing` | 4 | 0 |
+| Plate | circle (`plateRadius` 12, 22 px across) | n/a |
 
 Both boxes are square on purpose. Aurorae scales the 24x24 tile to `ButtonWidth x ButtonHeight`, so
 a box of 28x26 stretched every symbol 7.7% wider than tall — a circle in a glyph stopped being a
@@ -463,7 +464,7 @@ TitleEdgeTop=0                 TitleEdgeTopMaximized=0
 TitleEdgeBottom=0              TitleEdgeBottomMaximized=0
 TitleEdgeLeft=6                TitleEdgeLeftMaximized=6
 TitleEdgeRight=6               TitleEdgeRightMaximized=6
-ButtonMarginTop=3              ButtonMarginTopMaximized=3     ; traffic lights; 0 for symbols
+ButtonMarginTop=3              ButtonMarginTopMaximized=3     ; both styles
 PaddingTop=1  PaddingBottom=1  PaddingLeft=1  PaddingRight=1
 ```
 
@@ -573,7 +574,7 @@ and nothing else: a control has no compositing fallback for them to choose betwe
   "elementShape":   { "rounded": { "button":8 } },
   "decorationShape":{ "rounded": { "titlebar":10 } },
   "buttonStyles": {
-    "windows": { "plateRadius":12, "closePlate":"#e0655f", "width":24, "height":24,
+    "windows": { "plateRadius":12, "closePlate":"#e0655f", "width":22, "height":22, "buttonSpacing":4,
                  "closeHover":"0.75", "plainHover":"0.18", "rest":"0.85", "…":"…" }
   },
   "opacity": { "panel":0.85, "popup":0.85, "tooltip":0, "button":0.85 }

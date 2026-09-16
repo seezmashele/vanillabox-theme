@@ -9,11 +9,16 @@ import (
 // Aurorae button glyphs. These are artwork rather than anything derived from a
 // token, so they are held verbatim and only their size, colour and state
 // opacities are decided here.
+//
+// They are Phosphor Icons 2.1.1 (MIT), bold weight: x, minus, square and copy.
+// Bold rather than regular because the regular weight's 16-unit stroke renders
+// at 0.75px at the button's glyph size, which antialiases to a soft grey line;
+// bold's 24-unit stroke lands just over a pixel.
 const (
-	glyphClose    = "M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
-	glyphMinimize = "M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"
-	glyphMaximize = "M208,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32Zm0,176H48V48H208V208Z"
-	glyphRestore  = "M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"
+	glyphClose    = "M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z"
+	glyphMinimize = "M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128Z"
+	glyphMaximize = "M208,28H48A20,20,0,0,0,28,48V208a20,20,0,0,0,20,20H208a20,20,0,0,0,20-20V48A20,20,0,0,0,208,28Zm-4,176H52V52H204Z"
+	glyphRestore  = "M216,28H88A12,12,0,0,0,76,40V76H40A12,12,0,0,0,28,88V216a12,12,0,0,0,12,12H168a12,12,0,0,0,12-12V180h36a12,12,0,0,0,12-12V40A12,12,0,0,0,216,28ZM156,204H52V100H156Zm48-48H180V88a12,12,0,0,0-12-12H100V52H204Z"
 )
 
 // decorationNote explains why the bottom corners are square. It is reproduced
@@ -219,7 +224,7 @@ TitleHeight=%d
 ButtonWidth=%d
 ButtonWidthMenu=%d
 ButtonHeight=%d
-ButtonSpacing=0
+ButtonSpacing=%d
 ButtonMarginTop=%d
 ButtonMarginTopMaximized=%d
 ExplicitButtonSpacer=6
@@ -230,7 +235,7 @@ PaddingRight=%d
 `, rgb(palette["text"]), rgb(palette["textInactive"]),
 		titleEdgeTop, titleEdgeBottom, titleEdgeLeft, titleEdgeRight,
 		maxTop, maxBottom, maxLeft, maxRight,
-		titleHeight, style.Width, menuWidth, style.Height,
+		titleHeight, style.Width, menuWidth, style.Height, style.Spacing,
 		marginTop, marginTop,
 		padT, padB, padL, padR)
 }

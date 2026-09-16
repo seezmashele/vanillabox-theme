@@ -190,6 +190,11 @@ type buttonStyle struct {
 	// its breathing room above and below comes from.
 	MenuWidth int `json:"menuWidth"`
 
+	// Spacing is the gap Aurorae leaves between adjacent buttons. The hover
+	// plates are as wide as the button box, so without it neighbouring plates
+	// touch.
+	Spacing int `json:"buttonSpacing"`
+
 	// NudgeTop is added to the margin that centres the button in the titlebar.
 	// Centred and looking centred are not always the same thing, and this is
 	// where that difference is admitted to rather than hidden in the artwork.
