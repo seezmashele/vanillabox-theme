@@ -33,17 +33,17 @@
           "description": "The tint of the panel, popups and window backgrounds",
           "group": "Surface colour",
           "kind": "select",
-          "defaultValue": "slate",
+          "defaultValue": "neutral",
           "values": [
-            {
-              "id": "slate",
-              "name": "Slate",
-              "swatch": ["#25272a", "#33363c"]
-            },
             {
               "id": "neutral",
               "name": "Neutral",
               "swatch": ["#292929", "#383838"]
+            },
+            {
+              "id": "slate",
+              "name": "Slate",
+              "swatch": ["#222426", "#2f3236"]
             },
             {
               "id": "plum",

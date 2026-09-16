@@ -213,7 +213,7 @@ const (
 
 	// The theme as shipped. Every other point in the variant space is written
 	// under variants/ and copied over an install by the option that names it.
-	defaultPalette = "slate"
+	defaultPalette = "neutral"
 
 	// Rounded throughout, and not as a default anyone can move: the surfaces a
 	// thing sits in and the things sitting in them share one scale. The titlebar

@@ -32,7 +32,7 @@ three of these axes and is now none of them — see [Corners are not an axis](#c
 
 | Axis | Default | Mechanism | Files it owns |
 | --- | --- | --- | --- |
-| Palette | `slate` | runtime, plus one SVG | the two `colors` files, the look-and-feel `defaults`, `decoration.svg` |
+| Palette | `neutral` | runtime, plus one SVG | the two `colors` files, the look-and-feel `defaults`, `decoration.svg` |
 | Sidebar | `window` | runtime, as a product with the palette | `color-schemes/VanillaBoxDark.colors` |
 | Panel tint | `off` | runtime, as a product with the palette | the style's `colors` |
 | Button style | `windows` | baked | the four button SVGs and `VanillaBoxDarkrc` |
@@ -121,8 +121,7 @@ without ceremony.
 
 A tinted accent matches its surfaces in temperature, so a variant reads as one decision rather than
 two. `neutral` takes the grey surfaces and a grey accent, which is what makes it the quiet one rather
-than a colour with the volume turned down. `slate` takes a grey accent too — `#909090`, at the
-luminance of the blue it replaced so selection text and link contrast barely moved — so its cool
+than a colour with the volume turned down. `slate` takes the same grey accent, `#949494`, so its cool
 tint lives in the surfaces alone, and only `plum` carries its tint into the selection colour. Surfaces are named separately from palettes and
 referenced by name — a set can then be shared, and renaming a variant does not mean renaming the
 colours it points at.
@@ -567,13 +566,13 @@ and nothing else: a control has no compositing fallback for them to choose betwe
 
   "surfaces": {
     "grey":   { "background":"#292929", "elevated":"#3d3d3d", "view":"#141414", "…":"…" },
-    "slate":  { "background":"#25272a", "…":"…" },
+    "slate":  { "background":"#222426", "…":"…" },
     "plum":   { "background":"#2b272d", "…":"…" },
     "…":      "…"
   },
   "palettes": {
     "neutral": { "surfaces":"grey",   "accent":"#949494" },
-    "slate":   { "surfaces":"slate",  "accent":"#909090" },
+    "slate":   { "surfaces":"slate",  "accent":"#949494" },
     "plum":    { "surfaces":"plum",   "accent":"#a288b0" }
   },
   "containerShape": { "rounded": { "panel":10, "popup":10, "tooltip":8 } },

@@ -113,7 +113,7 @@ pair the page is actually about: the panel background and the elevated surface a
 colours are display only, and a test checks them against `spec/tokens.json` so a box cannot show
 one colour while the install writes another.
 
-They are genuinely subtle. The three panel colours sit within 4–7 units of each other out of a
+They are genuinely subtle. The three panel colours sit within 5–12 units of each other out of a
 possible 441, because a tinted dark surface is a dark surface first — that closeness is the design
 rather than a rendering problem, and it is why the boxes are two cells wide and come in pairs.
 
@@ -125,7 +125,7 @@ and every other page with them.
 
 | Preference | Values | Changes |
 | --- | --- | --- |
-| Surfaces | Slate, Neutral, Plum | the tint of every surface — and, quietly, the accent that goes with it |
+| Surfaces | Neutral, Slate, Plum | the tint of every surface — and, quietly, the accent that goes with it |
 | Sidebar background | Match the window, Match the file list | places panels in Dolphin, Kate and friends — and every other window background |
 | Darker panels & popups | Match the toolbars, Darker | the panel strip, the launcher and applet popups |
 | Window buttons | Symbols, Traffic lights | close, minimise and maximise |
@@ -137,7 +137,7 @@ and every other page with them.
 A choice's default is `"defaultValue"` in `theme.json` rather than whichever value happens to be
 listed first, and the two are free to disagree: the cursor opens on the value already selected, not
 on the first line, so a choice can list its values in whatever order reads best. Every choice
-happens to list the value it installs first. Accepting every prompt gives Slate, a sidebar on the
+happens to list the value it installs first. Accepting every prompt gives Neutral, a sidebar on the
 window colour, a panel at the toolbar colour, symbol window buttons, and a soft shadow
 under every window. The corners are not among the prompts: the theme rounds throughout, titlebars
 panels and popups to 10, and tooltips, buttons and inputs to 8.

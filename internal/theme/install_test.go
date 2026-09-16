@@ -255,7 +255,7 @@ func TestTransparencyTogglesActIndependently(t *testing.T) {
 func TestPaletteCarriesItsAccent(t *testing.T) {
 	palettes := map[string]struct{ surface, accent string }{
 		"neutral": {"41,41,41", "148,148,148"},
-		"slate":   {"37,39,42", "144,144,144"},
+		"slate":   {"34,36,38", "148,148,148"},
 		"plum":    {"43,39,45", "162,136,176"},
 	}
 
@@ -344,10 +344,10 @@ func TestPalettesAreDistinct(t *testing.T) {
 // shared one variant tree once, and choosing the merged sidebar darkened the
 // panel and the launcher along with it.
 func TestPanelTintAndSidebarAreSeparateInstalls(t *testing.T) {
-	// The default palette's surfaces: slate's background and view colours.
+	// The default palette's surfaces: neutral's background and view colours.
 	const (
-		chrome = "37,39,42"
-		view   = "18,19,22"
+		chrome = "41,41,41"
+		view   = "20,20,20"
 	)
 
 	// The window background of each file, which is the role both questions move
@@ -505,7 +505,7 @@ func TestTitlebarIsAProductOfThePalette(t *testing.T) {
 				t.Error("the titlebar has no curve commands, so it shipped square")
 			}
 
-			surface := map[string]string{"neutral": "#292929", "slate": "#25272a"}[tint]
+			surface := map[string]string{"neutral": "#292929", "slate": "#222426"}[tint]
 			if !strings.Contains(deco, surface) {
 				t.Errorf("titlebar is not painted in the %s surface %s", tint, surface)
 			}

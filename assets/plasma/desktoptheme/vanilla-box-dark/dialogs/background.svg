@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="44" height="60">
 <defs><style type="text/css" id="current-color-scheme">
-.ColorScheme-Background { color:#25272a; }
+.ColorScheme-Background { color:#292929; }
 </style></defs>
 <g id="topleft"><path d="M0,14 L0,10 C0,4.478 4.478,0 10,0 L14,0 L14,14 Z" class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.85"/></g>
 <g id="topright"><path d="M30,0 L34,0 C39.522,0 44,4.478 44,10 L44,14 L30,14 Z" class="ColorScheme-Background" style="fill:currentColor;fill-opacity:0.85"/></g>
