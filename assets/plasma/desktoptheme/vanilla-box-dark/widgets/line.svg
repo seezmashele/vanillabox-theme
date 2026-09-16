@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10">
+<rect id="horizontal-line" x="0" y="0" width="10" height="1" style="fill:none"/>
+<rect id="vertical-line" x="4" y="2" width="1" height="8" style="fill:none"/>
+</svg>

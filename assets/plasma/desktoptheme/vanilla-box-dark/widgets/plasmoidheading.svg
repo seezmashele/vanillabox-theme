@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="48">
+<rect id="header-topleft" x="0" y="0" width="4" height="4" style="fill:none"/>
+<rect id="header-top" x="4" y="0" width="16" height="4" style="fill:none"/>
+<rect id="header-topright" x="20" y="0" width="4" height="4" style="fill:none"/>
+<rect id="header-left" x="0" y="4" width="4" height="16" style="fill:none"/>
+<rect id="header-center" x="4" y="4" width="16" height="16" style="fill:none"/>
+<rect id="header-right" x="20" y="4" width="4" height="16" style="fill:none"/>
+<rect id="header-bottomleft" x="0" y="23" width="4" height="1" style="fill:#ffffff;fill-opacity:0"/>
+<rect id="header-bottom" x="4" y="23" width="16" height="1" style="fill:#ffffff;fill-opacity:0"/>
+<rect id="header-bottomright" x="20" y="23" width="4" height="1" style="fill:#ffffff;fill-opacity:0"/>
+<rect id="footer-topleft" x="0" y="24" width="4" height="1" style="fill:#ffffff;fill-opacity:0"/>
+<rect id="footer-top" x="4" y="24" width="16" height="1" style="fill:#ffffff;fill-opacity:0"/>
+<rect id="footer-topright" x="20" y="24" width="4" height="1" style="fill:#ffffff;fill-opacity:0"/>
+<rect id="footer-left" x="0" y="28" width="4" height="16" style="fill:none"/>
+<rect id="footer-center" x="4" y="28" width="16" height="16" style="fill:none"/>
+<rect id="footer-right" x="20" y="28" width="4" height="16" style="fill:none"/>
+<rect id="footer-bottomleft" x="0" y="44" width="4" height="4" style="fill:none"/>
+<rect id="footer-bottom" x="4" y="44" width="16" height="4" style="fill:none"/>
+<rect id="footer-bottomright" x="20" y="44" width="4" height="4" style="fill:none"/>
+</svg>

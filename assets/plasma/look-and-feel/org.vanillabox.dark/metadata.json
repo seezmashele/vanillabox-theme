@@ -1,0 +1,16 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "basic.seez@gmail.com",
+                "Name": "Sizwe"
+            }
+        ],
+        "Description": "A minimal, modern look — dark variant",
+        "Id": "org.vanillabox.dark",
+        "License": "GPL-3.0-or-later",
+        "Name": "Vanilla Box Dark",
+        "Version": "0.2.0"
+    },
+    "KPackageStructure": "Plasma/LookAndFeel"
+}

@@ -1,0 +1,6 @@
+- accent color options to use theme color or choose your own (default, slate, rose, plum etc)
+- add shadows toggle for panels (windows done: Shape page, `shadows` on/off)
+- add border toggle for windows
+- darken tooltip backgrounds a little
+- reduce rounded corners for windows and panels to 6px?
+- change the window button X bg opacity so its darker

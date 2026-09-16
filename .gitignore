@@ -1,0 +1,5 @@
+# assets/ is generated but deliberately committed: the installer reads it at
+# runtime and the tests install the real artwork. See DESIGN.md.
+/vanillabox
+/dist/
+*.test

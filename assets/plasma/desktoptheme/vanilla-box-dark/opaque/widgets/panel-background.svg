@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="56">
+<defs><style type="text/css" id="current-color-scheme">
+.ColorScheme-Background { color:#292929; }
+</style></defs>
+<g id="topleft"><path d="M0,12 C0,5.374 5.374,0 12,0 L12,12 Z" class="ColorScheme-Background" style="fill:currentColor"/></g><g id="topright"><path d="M28,0 C34.626,0 40,5.374 40,12 L28,12 Z" class="ColorScheme-Background" style="fill:currentColor"/></g><g id="bottomleft"><path d="M0,28 L12,28 L12,40 C5.374,40 0,34.626 0,28 Z" class="ColorScheme-Background" style="fill:currentColor"/></g><g id="bottomright"><path d="M28,28 L40,28 C40,34.626 34.626,40 28,40 Z" class="ColorScheme-Background" style="fill:currentColor"/></g><rect id="top" x="12" y="0" width="16" height="12" class="ColorScheme-Background" style="fill:currentColor"/><rect id="bottom" x="12" y="28" width="16" height="12" class="ColorScheme-Background" style="fill:currentColor"/><rect id="left" x="0" y="12" width="12" height="16" class="ColorScheme-Background" style="fill:currentColor"/><rect id="right" x="28" y="12" width="12" height="16" class="ColorScheme-Background" style="fill:currentColor"/><rect id="center" x="12" y="12" width="16" height="16" class="ColorScheme-Background" style="fill:currentColor"/>
+<g id="mask-topleft"><path d="M1,12 L0,12 L12,12 L12,0 L12,1 C5.926,1 1,5.926 1,12 Z" style="fill:#ffffff"/></g>
+<g id="mask-topright"><path d="M28,1 L28,0 L28,12 L40,12 L39,12 C39,5.926 34.074,1 28,1 Z" style="fill:#ffffff"/></g>
+<g id="mask-bottomleft"><path d="M1,28 L0,28 L12,28 L12,40 L12,39 C5.926,39 1,34.074 1,28 Z" style="fill:#ffffff"/></g>
+<g id="mask-bottomright"><path d="M28,39 L28,40 L28,28 L40,28 L39,28 C39,34.074 34.074,39 28,39 Z" style="fill:#ffffff"/></g>
+<rect id="mask-top" x="12" y="0" width="16" height="12" style="fill:#ffffff"/>
+<rect id="mask-bottom" x="12" y="28" width="16" height="12" style="fill:#ffffff"/>
+<rect id="mask-left" x="0" y="12" width="12" height="16" style="fill:#ffffff"/>
+<rect id="mask-right" x="28" y="12" width="12" height="16" style="fill:#ffffff"/>
+<rect id="mask-center" x="12" y="12" width="16" height="16" style="fill:#ffffff"/>
+<rect id="hint-top-margin" x="0" y="44" width="2" height="2" style="fill:none"/><rect id="hint-bottom-margin" x="10" y="44" width="2" height="2" style="fill:none"/><rect id="hint-left-margin" x="20" y="44" width="2" height="2" style="fill:none"/><rect id="hint-right-margin" x="30" y="44" width="2" height="2" style="fill:none"/>
+</svg>

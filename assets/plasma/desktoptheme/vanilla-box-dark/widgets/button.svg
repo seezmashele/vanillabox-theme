@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="196">
+<defs><style type="text/css" id="current-color-scheme">.ColorScheme-Text { color:#e8e4dd; }.ColorScheme-Highlight { color:#ae8e6c; }.ColorScheme-ButtonBackground { color:#3d3d3d; }.ColorScheme-ButtonHover { color:#9e9e9e; }</style></defs>
+<rect id="normal-hint-left-margin" x="0" y="0" width="6" height="6" style="fill:none"/>
+<rect id="normal-hint-right-margin" x="6" y="0" width="6" height="6" style="fill:none"/>
+<rect id="normal-hint-top-margin" x="12" y="0" width="6" height="6" style="fill:none"/>
+<rect id="normal-hint-bottom-margin" x="18" y="0" width="6" height="6" style="fill:none"/>
+<g id="normal-topleft"><path d="M0,8 A8,8 0 0 1 8,0 L8,8 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-top"><rect x="8" y="0" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-topright"><path d="M16,0 A8,8 0 0 1 24,8 L16,8 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-left"><rect x="0" y="8" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-center"><rect x="8" y="8" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-right"><rect x="16" y="8" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-bottomleft"><path d="M8,24 A8,8 0 0 1 0,16 L8,16 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-bottom"><rect x="8" y="16" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="normal-bottomright"><path d="M24,16 A8,8 0 0 1 16,24 L16,16 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/></g>
+<g id="hover-topleft"><path d="M0,36 A8,8 0 0 1 8,28 L8,36 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-top"><rect x="8" y="28" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-topright"><path d="M16,28 A8,8 0 0 1 24,36 L16,36 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-left"><rect x="0" y="36" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-center"><rect x="8" y="36" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-right"><rect x="16" y="36" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-bottomleft"><path d="M8,52 A8,8 0 0 1 0,44 L8,44 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-bottom"><rect x="8" y="44" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="hover-bottomright"><path d="M24,44 A8,8 0 0 1 16,52 L16,44 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<rect id="pressed-hint-left-margin" x="0" y="56" width="6" height="6" style="fill:none"/>
+<rect id="pressed-hint-right-margin" x="6" y="56" width="6" height="6" style="fill:none"/>
+<rect id="pressed-hint-top-margin" x="12" y="56" width="6" height="6" style="fill:none"/>
+<rect id="pressed-hint-bottom-margin" x="18" y="56" width="6" height="6" style="fill:none"/>
+<g id="pressed-topleft"><path d="M0,64 A8,8 0 0 1 8,56 L8,64 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><path d="M0,64 A8,8 0 0 1 8,56 L8,64 Z" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-top"><rect x="8" y="56" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><rect x="8" y="56" width="8" height="8" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-topright"><path d="M16,56 A8,8 0 0 1 24,64 L16,64 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><path d="M16,56 A8,8 0 0 1 24,64 L16,64 Z" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-left"><rect x="0" y="64" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><rect x="0" y="64" width="8" height="8" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-center"><rect x="8" y="64" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><rect x="8" y="64" width="8" height="8" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-right"><rect x="16" y="64" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><rect x="16" y="64" width="8" height="8" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-bottomleft"><path d="M8,80 A8,8 0 0 1 0,72 L8,72 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><path d="M8,80 A8,8 0 0 1 0,72 L8,72 Z" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-bottom"><rect x="8" y="72" width="8" height="8" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><rect x="8" y="72" width="8" height="8" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<g id="pressed-bottomright"><path d="M24,72 A8,8 0 0 1 16,80 L16,72 Z" class="ColorScheme-ButtonBackground" style="fill:currentColor" opacity="0.85"/><path d="M24,72 A8,8 0 0 1 16,80 L16,72 Z" class="ColorScheme-ButtonHover" style="fill:currentColor" opacity="0.45"/></g>
+<rect id="focus-hint-left-margin" x="0" y="84" width="6" height="6" style="fill:none"/>
+<rect id="focus-hint-right-margin" x="6" y="84" width="6" height="6" style="fill:none"/>
+<rect id="focus-hint-top-margin" x="12" y="84" width="6" height="6" style="fill:none"/>
+<rect id="focus-hint-bottom-margin" x="18" y="84" width="6" height="6" style="fill:none"/>
+<rect id="focus-topleft" x="0" y="84" width="8" height="8" style="fill:none"/>
+<rect id="focus-top" x="8" y="84" width="8" height="8" style="fill:none"/>
+<rect id="focus-topright" x="16" y="84" width="8" height="8" style="fill:none"/>
+<rect id="focus-left" x="0" y="92" width="8" height="8" style="fill:none"/>
+<rect id="focus-center" x="8" y="92" width="8" height="8" style="fill:none"/>
+<rect id="focus-right" x="16" y="92" width="8" height="8" style="fill:none"/>
+<rect id="focus-bottomleft" x="0" y="100" width="8" height="8" style="fill:none"/>
+<rect id="focus-bottom" x="8" y="100" width="8" height="8" style="fill:none"/>
+<rect id="focus-bottomright" x="16" y="100" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-hover-hint-left-margin" x="0" y="112" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-hover-hint-right-margin" x="6" y="112" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-hover-hint-top-margin" x="12" y="112" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-hover-hint-bottom-margin" x="18" y="112" width="6" height="6" style="fill:none"/>
+<g id="toolbutton-hover-topleft"><path d="M0,120 A8,8 0 0 1 8,112 L8,120 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-top"><rect x="8" y="112" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-topright"><path d="M16,112 A8,8 0 0 1 24,120 L16,120 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-left"><rect x="0" y="120" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-center"><rect x="8" y="120" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-right"><rect x="16" y="120" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-bottomleft"><path d="M8,136 A8,8 0 0 1 0,128 L8,128 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-bottom"><rect x="8" y="128" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<g id="toolbutton-hover-bottomright"><path d="M24,128 A8,8 0 0 1 16,136 L16,128 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.08"/></g>
+<rect id="toolbutton-pressed-hint-left-margin" x="0" y="140" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-pressed-hint-right-margin" x="6" y="140" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-pressed-hint-top-margin" x="12" y="140" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-pressed-hint-bottom-margin" x="18" y="140" width="6" height="6" style="fill:none"/>
+<g id="toolbutton-pressed-topleft"><path d="M0,148 A8,8 0 0 1 8,140 L8,148 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-top"><rect x="8" y="140" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-topright"><path d="M16,140 A8,8 0 0 1 24,148 L16,148 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-left"><rect x="0" y="148" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-center"><rect x="8" y="148" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-right"><rect x="16" y="148" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-bottomleft"><path d="M8,164 A8,8 0 0 1 0,156 L8,156 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-bottom"><rect x="8" y="156" width="8" height="8" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<g id="toolbutton-pressed-bottomright"><path d="M24,156 A8,8 0 0 1 16,164 L16,156 Z" class="ColorScheme-Text" style="fill:currentColor" opacity="0.15"/></g>
+<rect id="toolbutton-focus-hint-left-margin" x="0" y="168" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-focus-hint-right-margin" x="6" y="168" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-focus-hint-top-margin" x="12" y="168" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-focus-hint-bottom-margin" x="18" y="168" width="6" height="6" style="fill:none"/>
+<rect id="toolbutton-focus-topleft" x="0" y="168" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-top" x="8" y="168" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-topright" x="16" y="168" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-left" x="0" y="176" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-center" x="8" y="176" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-right" x="16" y="176" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-bottomleft" x="0" y="184" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-bottom" x="8" y="184" width="8" height="8" style="fill:none"/>
+<rect id="toolbutton-focus-bottomright" x="16" y="184" width="8" height="8" style="fill:none"/>
+<rect id="hover-hint-no-border-padding" x="0" y="0" width="1" height="1" style="fill:none"/>
+</svg>

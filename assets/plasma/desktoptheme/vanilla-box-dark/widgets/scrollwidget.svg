@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+<!-- The frame Plasma draws around a scrollable area. It is here only to paint
+     nothing.
+
+     Every tile is fill:none on purpose. A theme that does not ship a widget
+     falls back to the default theme's copy, and Breeze's scrollwidget paints
+     border-top, border-left, border-right and border-bottom in currentColor at
+     full opacity — a 1px box around every scroll area in a Plasma popup. There
+     is no way to switch that off from elsewhere; the only way to not have it is
+     to ship a scrollwidget of our own.
+
+     The 1px edges are kept rather than collapsed to zero so the insets Plasma
+     reads from this frame match what Breeze reported. Only the paint is gone,
+     so nothing reflows.
+
+     The scrollbar itself is widgets/scrollbar.svg and is deliberately untouched
+     by this file. -->
+<g id="base-topleft"><rect x="0" y="0" width="1" height="1" style="fill:none"/></g>
+<g id="base-top"><rect x="1" y="0" width="30" height="1" style="fill:none"/></g>
+<g id="base-topright"><rect x="31" y="0" width="1" height="1" style="fill:none"/></g>
+<g id="base-left"><rect x="0" y="1" width="1" height="30" style="fill:none"/></g>
+<g id="base-center"><rect x="1" y="1" width="30" height="30" style="fill:none"/></g>
+<g id="base-right"><rect x="31" y="1" width="1" height="30" style="fill:none"/></g>
+<g id="base-bottomleft"><rect x="0" y="31" width="1" height="1" style="fill:none"/></g>
+<g id="base-bottom"><rect x="1" y="31" width="30" height="1" style="fill:none"/></g>
+<g id="base-bottomright"><rect x="31" y="31" width="1" height="1" style="fill:none"/></g>
+<g id="border-topleft"><rect x="0" y="0" width="1" height="1" style="fill:none"/></g>
+<g id="border-top"><rect x="1" y="0" width="30" height="1" style="fill:none"/></g>
+<g id="border-topright"><rect x="31" y="0" width="1" height="1" style="fill:none"/></g>
+<g id="border-left"><rect x="0" y="1" width="1" height="30" style="fill:none"/></g>
+<g id="border-center"><rect x="1" y="1" width="30" height="30" style="fill:none"/></g>
+<g id="border-right"><rect x="31" y="1" width="1" height="30" style="fill:none"/></g>
+<g id="border-bottomleft"><rect x="0" y="31" width="1" height="1" style="fill:none"/></g>
+<g id="border-bottom"><rect x="1" y="31" width="30" height="1" style="fill:none"/></g>
+<g id="border-bottomright"><rect x="31" y="31" width="1" height="1" style="fill:none"/></g>
+</svg>

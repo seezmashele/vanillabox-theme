@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="116">
+<!-- Corner tiles are 12 wide so the top two corners carry a 12px radius. Each
+     corner draws the border colour first and lays the background over it inset
+     by 1px at radius 11, so the two antialiased edges stay concentric and no
+     seam shows along the curve.
+
+     The bottom corners are square, and deliberately so. Rounding them needs a
+     bottom border to draw the curve in, and anything narrower than the radius
+     lets the client window's square corner show through it. Breeze avoids that
+     by calling KDecoration3::Decoration::setBorderRadius, which makes KWin clip
+     the client itself — neither Aurorae plugin exposes that API, so an SVG
+     theme cannot round the bottom without a visible bottom strip. -->
+<g id="decoration-topleft"><path d="M0,31 L0,12 C0,5.374 5.374,0 12,0 L12,0 L12,31 Z" fill="#3b353f"/><path d="M1,31 L1,12 C1,5.926 5.926,1 12,1 L12,1 L12,31 Z" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-top"><rect x="12" y="0" width="24" height="1" fill="#3b353f"/><rect x="12" y="1" width="24" height="30" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-topright"><path d="M48,31 L48,12 C48,5.374 42.626,0 36,0 L36,0 L36,31 Z" fill="#3b353f"/><path d="M47,31 L47,12 C47,5.926 42.074,1 36,1 L36,1 L36,31 Z" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-left"><rect x="0" y="31" width="1" height="25" fill="#3b353f"/><rect x="1" y="31" width="11" height="25" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-center"><rect x="12" y="31" width="24" height="25" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-right"><rect x="36" y="31" width="11" height="25" class="ColorScheme-Background" fill="#2b272d"/><rect x="47" y="31" width="1" height="25" fill="#3b353f"/></g>
+<g id="decoration-bottomleft"><rect x="0" y="55" width="12" height="1" fill="#3b353f"/></g>
+<g id="decoration-bottom"><rect x="12" y="55" width="24" height="1" fill="#3b353f"/></g>
+<g id="decoration-bottomright"><rect x="36" y="55" width="12" height="1" fill="#3b353f"/></g>
+<g id="decoration-inactive-topleft"><path d="M0,91 L0,72 C0,65.374 5.374,60 12,60 L12,60 L12,91 Z" fill="#3b353f"/><path d="M1,91 L1,72 C1,65.926 5.926,61 12,61 L12,61 L12,91 Z" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-inactive-top"><rect x="12" y="60" width="24" height="1" fill="#3b353f"/><rect x="12" y="61" width="24" height="30" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-inactive-topright"><path d="M48,91 L48,72 C48,65.374 42.626,60 36,60 L36,60 L36,91 Z" fill="#3b353f"/><path d="M47,91 L47,72 C47,65.926 42.074,61 36,61 L36,61 L36,91 Z" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-inactive-left"><rect x="0" y="91" width="1" height="25" fill="#3b353f"/><rect x="1" y="91" width="11" height="25" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-inactive-center"><rect x="12" y="91" width="24" height="25" class="ColorScheme-Background" fill="#2b272d"/></g>
+<g id="decoration-inactive-right"><rect x="36" y="91" width="11" height="25" class="ColorScheme-Background" fill="#2b272d"/><rect x="47" y="91" width="1" height="25" fill="#3b353f"/></g>
+<g id="decoration-inactive-bottomleft"><rect x="0" y="115" width="12" height="1" fill="#3b353f"/></g>
+<g id="decoration-inactive-bottom"><rect x="12" y="115" width="24" height="1" fill="#3b353f"/></g>
+<g id="decoration-inactive-bottomright"><rect x="36" y="115" width="12" height="1" fill="#3b353f"/></g>
+</svg>

@@ -1,0 +1,233 @@
+{
+  "name": "Vanilla Box Dark",
+  "id": "vanilla-box-dark",
+  "version": "0.2.0",
+  "author": "Sizwe",
+  "description": "A minimal, modern look for KDE Plasma 6 — dark variant.",
+  "components": [
+    {
+      "id": "colors",
+      "name": "Color scheme",
+      "description": "Window and widget colors",
+      "source": "color-schemes/VanillaBoxDark.colors",
+      "target": "color-schemes",
+      "required": true,
+      "resolved": [
+        {
+          "source": "variants/colors/app/{palette}-{sidebar}/VanillaBoxDark.colors",
+          "target": ""
+        }
+      ]
+    },
+    {
+      "id": "plasma-style",
+      "name": "Plasma style",
+      "description": "Panel, widget and system tray artwork",
+      "source": "plasma/desktoptheme/vanilla-box-dark",
+      "target": "plasma/desktoptheme",
+      "required": true,
+      "options": [
+        {
+          "id": "palette",
+          "name": "Surfaces",
+          "description": "The tint of the panel, popups and window backgrounds",
+          "group": "Surface colour",
+          "kind": "select",
+          "defaultValue": "neutral",
+          "values": [
+            {
+              "id": "neutral",
+              "name": "Neutral",
+              "swatch": ["#292929", "#383838"]
+            },
+            {
+              "id": "slate",
+              "name": "Slate",
+              "swatch": ["#272a2f", "#363b42"]
+            },
+            {
+              "id": "plum",
+              "name": "Plum",
+              "swatch": ["#2b272d", "#3b353f"]
+            },
+            {
+              "id": "rose",
+              "name": "Rose",
+              "swatch": ["#2b2729", "#3b3538"]
+            },
+            {
+              "id": "forest",
+              "name": "Forest",
+              "swatch": ["#252b25", "#343c34"]
+            }
+          ]
+        },
+        {
+          "id": "sidebar",
+          "name": "Sidebar background",
+          "description": "Places panels in Dolphin, Kate and other KDE apps",
+          "group": "Surface colour",
+          "kind": "select",
+          "defaultValue": "view",
+          "values": [
+            {
+              "id": "view",
+              "name": "Match the file list",
+              "description": "sidebar and list merge into one dark field"
+            },
+            {
+              "id": "window",
+              "name": "Match the window",
+              "description": "a lighter strip beside the file list, as KDE ships it"
+            }
+          ]
+        },
+        {
+          "id": "panel-tint",
+          "name": "Darker panels & popups",
+          "description": "The panel strip, the launcher and applet popups",
+          "group": "Surface colour",
+          "kind": "select",
+          "defaultValue": "off",
+          "values": [
+            {
+              "id": "off",
+              "name": "Match the toolbars",
+              "description": "the panel sits at the chrome colour, as the titlebars do"
+            },
+            {
+              "id": "on",
+              "name": "Darker",
+              "description": "the panel and its popups drop to the file-list colour"
+            }
+          ]
+        },
+        {
+          "id": "transparency-panel",
+          "name": "Translucent panel",
+          "description": "The panel strip",
+          "group": "Transparency",
+          "kind": "toggle",
+          "default": true,
+          "overlayWhenOff": {
+            "from": "variants/containers/opaque",
+            "files": [
+              "widgets/panel-background.svg"
+            ]
+          }
+        },
+        {
+          "id": "transparency-popups",
+          "name": "Translucent popups & menus",
+          "description": "Launcher and system tray popups",
+          "group": "Transparency",
+          "kind": "toggle",
+          "default": true,
+          "overlayWhenOff": {
+            "from": "variants/containers/opaque",
+            "files": [
+              "dialogs/background.svg"
+            ]
+          }
+        },
+        {
+          "id": "transparency-applets",
+          "name": "Translucent applets",
+          "description": "Plasmoid content areas",
+          "group": "Transparency",
+          "kind": "toggle",
+          "default": true,
+          "overlayWhenOff": {
+            "from": "variants/containers/opaque",
+            "files": [
+              "widgets/background.svg"
+            ]
+          }
+        }
+      ],
+      "resolved": [
+        {
+          "source": "variants/colors/shell/{palette}-{panel-tint}/colors",
+          "target": "colors"
+        }
+      ]
+    },
+    {
+      "id": "decoration",
+      "name": "Window decoration",
+      "description": "Titlebar and window buttons",
+      "source": "aurorae/themes/VanillaBoxDark",
+      "target": "aurorae/themes",
+      "required": true,
+      "options": [
+        {
+          "id": "shadows",
+          "name": "Window shadows",
+          "description": "A soft drop shadow under every window",
+          "group": "Shape",
+          "order": 2,
+          "kind": "select",
+          "defaultValue": "on",
+          "values": [
+            {
+              "id": "on",
+              "name": "Shadows"
+            },
+            {
+              "id": "off",
+              "name": "No shadows",
+              "description": "(flat against the desktop)"
+            }
+          ]
+        },
+        {
+          "id": "buttons",
+          "name": "Window buttons",
+          "description": "Close, minimise and maximise",
+          "group": "Shape",
+          "order": 1,
+          "kind": "select",
+          "defaultValue": "mac",
+          "values": [
+            {
+              "id": "mac",
+              "name": "Traffic lights",
+              "description": "(similar to Mac)",
+              "overlay": {
+                "from": "variants/buttons/mac-{shadows}"
+              }
+            },
+            {
+              "id": "windows",
+              "name": "Symbols",
+              "description": "(similar to Windows)",
+              "overlay": {
+                "from": "variants/buttons/windows-{shadows}"
+              }
+            }
+          ]
+        }
+      ],
+      "resolved": [
+        {
+          "source": "variants/decoration/{palette}-{shadows}/decoration.svg",
+          "target": "decoration.svg"
+        }
+      ]
+    },
+    {
+      "id": "global-theme",
+      "name": "Global theme",
+      "description": "The whole look as one entry in System Settings",
+      "source": "plasma/look-and-feel/org.vanillabox.dark",
+      "target": "plasma/look-and-feel",
+      "required": true,
+      "resolved": [
+        {
+          "source": "variants/defaults/{palette}/defaults",
+          "target": "contents/defaults"
+        }
+      ]
+    }
+  ]
+}
