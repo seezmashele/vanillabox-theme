@@ -10,22 +10,22 @@
      by calling KDecoration3::Decoration::setBorderRadius, which makes KWin clip
      the client itself — neither Aurorae plugin exposes that API, so an SVG
      theme cannot round the bottom without a visible bottom strip. -->
-<g id="decoration-topleft"><path d="M0,31 L0,10 C0,4.478 4.478,0 10,0 L12,0 L12,31 Z" fill="#363b42"/><path d="M1,31 L1,10 C1,5.03 5.03,1 10,1 L12,1 L12,31 Z" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-top"><rect x="12" y="0" width="24" height="1" fill="#363b42"/><rect x="12" y="1" width="24" height="30" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-topright"><path d="M48,31 L48,10 C48,4.478 43.522,0 38,0 L36,0 L36,31 Z" fill="#363b42"/><path d="M47,31 L47,10 C47,5.03 42.97,1 38,1 L36,1 L36,31 Z" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-left"><rect x="0" y="31" width="1" height="25" fill="#363b42"/><rect x="1" y="31" width="11" height="25" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-center"><rect x="12" y="31" width="24" height="25" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-right"><rect x="36" y="31" width="11" height="25" class="ColorScheme-Background" fill="#272a2f"/><rect x="47" y="31" width="1" height="25" fill="#363b42"/></g>
-<g id="decoration-bottomleft"><rect x="0" y="55" width="12" height="1" fill="#363b42"/></g>
-<g id="decoration-bottom"><rect x="12" y="55" width="24" height="1" fill="#363b42"/></g>
-<g id="decoration-bottomright"><rect x="36" y="55" width="12" height="1" fill="#363b42"/></g>
-<g id="decoration-inactive-topleft"><path d="M0,91 L0,70 C0,64.478 4.478,60 10,60 L12,60 L12,91 Z" fill="#363b42"/><path d="M1,91 L1,70 C1,65.03 5.03,61 10,61 L12,61 L12,91 Z" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-inactive-top"><rect x="12" y="60" width="24" height="1" fill="#363b42"/><rect x="12" y="61" width="24" height="30" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-inactive-topright"><path d="M48,91 L48,70 C48,64.478 43.522,60 38,60 L36,60 L36,91 Z" fill="#363b42"/><path d="M47,91 L47,70 C47,65.03 42.97,61 38,61 L36,61 L36,91 Z" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-inactive-left"><rect x="0" y="91" width="1" height="25" fill="#363b42"/><rect x="1" y="91" width="11" height="25" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-inactive-center"><rect x="12" y="91" width="24" height="25" class="ColorScheme-Background" fill="#272a2f"/></g>
-<g id="decoration-inactive-right"><rect x="36" y="91" width="11" height="25" class="ColorScheme-Background" fill="#272a2f"/><rect x="47" y="91" width="1" height="25" fill="#363b42"/></g>
-<g id="decoration-inactive-bottomleft"><rect x="0" y="115" width="12" height="1" fill="#363b42"/></g>
-<g id="decoration-inactive-bottom"><rect x="12" y="115" width="24" height="1" fill="#363b42"/></g>
-<g id="decoration-inactive-bottomright"><rect x="36" y="115" width="12" height="1" fill="#363b42"/></g>
+<g id="decoration-topleft"><path d="M0,31 L0,10 C0,4.478 4.478,0 10,0 L12,0 L12,31 Z" fill="#33363c"/><path d="M1,31 L1,10 C1,5.03 5.03,1 10,1 L12,1 L12,31 Z" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-top"><rect x="12" y="0" width="24" height="1" fill="#33363c"/><rect x="12" y="1" width="24" height="30" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-topright"><path d="M48,31 L48,10 C48,4.478 43.522,0 38,0 L36,0 L36,31 Z" fill="#33363c"/><path d="M47,31 L47,10 C47,5.03 42.97,1 38,1 L36,1 L36,31 Z" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-left"><rect x="0" y="31" width="1" height="25" fill="#33363c"/><rect x="1" y="31" width="11" height="25" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-center"><rect x="12" y="31" width="24" height="25" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-right"><rect x="36" y="31" width="11" height="25" class="ColorScheme-Background" fill="#25272a"/><rect x="47" y="31" width="1" height="25" fill="#33363c"/></g>
+<g id="decoration-bottomleft"><rect x="0" y="55" width="12" height="1" fill="#33363c"/></g>
+<g id="decoration-bottom"><rect x="12" y="55" width="24" height="1" fill="#33363c"/></g>
+<g id="decoration-bottomright"><rect x="36" y="55" width="12" height="1" fill="#33363c"/></g>
+<g id="decoration-inactive-topleft"><path d="M0,91 L0,70 C0,64.478 4.478,60 10,60 L12,60 L12,91 Z" fill="#33363c"/><path d="M1,91 L1,70 C1,65.03 5.03,61 10,61 L12,61 L12,91 Z" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-inactive-top"><rect x="12" y="60" width="24" height="1" fill="#33363c"/><rect x="12" y="61" width="24" height="30" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-inactive-topright"><path d="M48,91 L48,70 C48,64.478 43.522,60 38,60 L36,60 L36,91 Z" fill="#33363c"/><path d="M47,91 L47,70 C47,65.03 42.97,61 38,61 L36,61 L36,91 Z" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-inactive-left"><rect x="0" y="91" width="1" height="25" fill="#33363c"/><rect x="1" y="91" width="11" height="25" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-inactive-center"><rect x="12" y="91" width="24" height="25" class="ColorScheme-Background" fill="#25272a"/></g>
+<g id="decoration-inactive-right"><rect x="36" y="91" width="11" height="25" class="ColorScheme-Background" fill="#25272a"/><rect x="47" y="91" width="1" height="25" fill="#33363c"/></g>
+<g id="decoration-inactive-bottomleft"><rect x="0" y="115" width="12" height="1" fill="#33363c"/></g>
+<g id="decoration-inactive-bottom"><rect x="12" y="115" width="24" height="1" fill="#33363c"/></g>
+<g id="decoration-inactive-bottomright"><rect x="36" y="115" width="12" height="1" fill="#33363c"/></g>
 </svg>

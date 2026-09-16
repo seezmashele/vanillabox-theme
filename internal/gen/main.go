@@ -213,7 +213,7 @@ const (
 
 	// The theme as shipped. Every other point in the variant space is written
 	// under variants/ and copied over an install by the option that names it.
-	defaultPalette = "neutral"
+	defaultPalette = "slate"
 
 	// Rounded throughout, and not as a default anyone can move: the surfaces a
 	// thing sits in and the things sitting in them share one scale. The titlebar
@@ -234,13 +234,14 @@ const (
 	// background, so "view" is the one that moves that background onto the view
 	// colour and "window" is leaving it where it is.
 	//
-	// "view" is the default: the merged sidebar and file list is the look the
-	// theme is going for, and it is worth the whole window background moving
-	// with it. "window" is here for anyone who would rather KDE's own
-	// arrangement stayed put.
+	// "window" is the default: KDE's own arrangement, a sidebar on the window
+	// colour beside a darker file list, which leaves dialogs, settings pages and
+	// every other window background where they are. "view" is here for anyone
+	// who wants the sidebar merged into the file list and accepts the whole
+	// window background moving with it.
 	sidebarWindow  = "window"
 	sidebarView    = "view"
-	defaultSidebar = sidebarView
+	defaultSidebar = sidebarWindow
 
 	// The two points on the panel tint axis, which is the same move made in the
 	// shell's copy of the scheme rather than in the application one.

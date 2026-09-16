@@ -32,8 +32,8 @@ three of these axes and is now none of them — see [Corners are not an axis](#c
 
 | Axis | Default | Mechanism | Files it owns |
 | --- | --- | --- | --- |
-| Palette | `neutral` | runtime, plus one SVG | the two `colors` files, the look-and-feel `defaults`, `decoration.svg` |
-| Sidebar | `view` | runtime, as a product with the palette | `color-schemes/VanillaBoxDark.colors` |
+| Palette | `slate` | runtime, plus one SVG | the two `colors` files, the look-and-feel `defaults`, `decoration.svg` |
+| Sidebar | `window` | runtime, as a product with the palette | `color-schemes/VanillaBoxDark.colors` |
 | Panel tint | `off` | runtime, as a product with the palette | the style's `colors` |
 | Button style | `windows` | baked | the four button SVGs and `VanillaBoxDarkrc` |
 | Window shadow | `on` | Breeze's, baked as a product with the palette | `aurorae/decoration.svg`, the rc's `Padding*` |
@@ -119,9 +119,11 @@ The cost is real: plum surfaces with a steel accent is no longer reachable. If t
 matter the axes split again — the generator already writes a product elsewhere and would do it here
 without ceremony.
 
-Accents match their surfaces in temperature, so a variant reads as one decision rather than two.
-`neutral` takes the grey surfaces and a grey accent, which is what makes it the quiet one rather
-than a colour with the volume turned down. Surfaces are named separately from palettes and
+A tinted accent matches its surfaces in temperature, so a variant reads as one decision rather than
+two. `neutral` takes the grey surfaces and a grey accent, which is what makes it the quiet one rather
+than a colour with the volume turned down. `slate` takes a grey accent too — `#909090`, at the
+luminance of the blue it replaced so selection text and link contrast barely moved — so its cool
+tint lives in the surfaces alone, and only `plum` carries its tint into the selection colour. Surfaces are named separately from palettes and
 referenced by name — a set can then be shared, and renaming a variant does not mean renaming the
 colours it points at.
 
@@ -326,7 +328,8 @@ side effect. Nothing in Plasma ties the two files, and two things argue for keep
 
 With the panel on the chrome colour it matches the toolbars and the titlebar, which paints
 `background` regardless of either option: chrome is the panel, the toolbars and the titlebar; the
-view colour is the file list, the sidebar and the window body. That is why `off` is the default,
+view colour is the file list, and the sidebar and window body too when the sidebar option merges
+them into it. That is why `off` is the default,
 and why `on` is still worth offering — a desktop where everything but the toolbars is the view
 colour is a coherent look, just not the shipped one.
 
@@ -564,13 +567,13 @@ and nothing else: a control has no compositing fallback for them to choose betwe
 
   "surfaces": {
     "grey":   { "background":"#292929", "elevated":"#3d3d3d", "view":"#141414", "…":"…" },
-    "slate":  { "background":"#272a2f", "…":"…" },
+    "slate":  { "background":"#25272a", "…":"…" },
     "plum":   { "background":"#2b272d", "…":"…" },
     "…":      "…"
   },
   "palettes": {
     "neutral": { "surfaces":"grey",   "accent":"#949494" },
-    "slate":   { "surfaces":"slate",  "accent":"#7d93ad" },
+    "slate":   { "surfaces":"slate",  "accent":"#909090" },
     "plum":    { "surfaces":"plum",   "accent":"#a288b0" }
   },
   "containerShape": { "rounded": { "panel":10, "popup":10, "tooltip":8 } },

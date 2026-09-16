@@ -33,17 +33,17 @@
           "description": "The tint of the panel, popups and window backgrounds",
           "group": "Surface colour",
           "kind": "select",
-          "defaultValue": "neutral",
+          "defaultValue": "slate",
           "values": [
+            {
+              "id": "slate",
+              "name": "Slate",
+              "swatch": ["#25272a", "#33363c"]
+            },
             {
               "id": "neutral",
               "name": "Neutral",
               "swatch": ["#292929", "#383838"]
-            },
-            {
-              "id": "slate",
-              "name": "Slate",
-              "swatch": ["#272a2f", "#363b42"]
             },
             {
               "id": "plum",
@@ -58,17 +58,17 @@
           "description": "Places panels in Dolphin, Kate and other KDE apps",
           "group": "Surface colour",
           "kind": "select",
-          "defaultValue": "view",
+          "defaultValue": "window",
           "values": [
-            {
-              "id": "view",
-              "name": "Match the file list",
-              "description": "sidebar and list merge into one dark field"
-            },
             {
               "id": "window",
               "name": "Match the window",
               "description": "a lighter strip beside the file list, as KDE ships it"
+            },
+            {
+              "id": "view",
+              "name": "Match the file list",
+              "description": "sidebar and list merge into one dark field"
             }
           ]
         },
