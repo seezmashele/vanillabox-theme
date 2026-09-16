@@ -797,6 +797,52 @@ Only the tooltip needs this. `widgets/button.svg` is the other file a `shadow` p
 Every other container is a flat fill, where a doubled draw has nothing to show. A border is what
 makes the fallback visible, and the tooltip is the only container that carries one.
 
+### The popup shadow
+
+The launcher and the system tray popups are windows, and Plasma asks the compositor to shadow them
+itself. `DialogShadows` in libPlasmaQuick reads eight `shadow-<side>` tiles and four
+`shadow-hint-<side>-margin` rects out of `dialogs/background` — nothing else; the `-inset` hints
+Breeze also ships are not consulted — and KWin lays each tile with its outer edge the margin's
+distance outside the popup. Without the tiles there is no shadow at all, which is how the theme
+shipped until now.
+
+Only `dialogs/background.svg` carries them. `widgets/background.svg` is rendered from the same frame,
+but applets draw it inside the panel and on the desktop, where a shadow would be a second, wrong
+one. `TestOnlyDialogsCastAShadow` pins that. The `opaque/` and `solid/` copies carry the shadow too:
+the popup transparency toggle is about the surface, not the shadow under it.
+
+**The field is a single blurred box** the shape of the popup, pushed down 3px, at 0.4 strength with
+a blur radius of 12 — `popupShadow` in the tokens, with `radius` in Breeze's convention of
+`stdDev = radius / 2`. It started as Breeze's own popup shadow, measured off its
+`dialogs/background.svgz` (a quarter strength, radius 6, 2px down), and that could not be seen in
+use. The launcher and the tray popups mostly open over dark windows about as bright as the popup
+itself, and a quarter-strength shadow darkened that backdrop by four levels. Checked on a live
+desktop, the shadow was there and simply below notice. The shipped values darken the same backdrop
+by about eight levels at the side and eleven below, and reach twice as far;
+`TestPopupShadowShowsOnDarkBackdrops` holds that floor. It stays lighter than the window shadow,
+whose two layers are stronger and wider — a popup is small and sits against a panel.
+
+**The tiles are cut around the popup.** Whatever a tile holds past its margin sits underneath the
+popup, and the popups are 85% opaque — a shadow drawn there shows through as a dark band inside the
+edge. Breeze leaves that part of its tiles empty; these cut out the popup's rounded outline
+exactly, and `TestPopupShadowLeavesThePopupClear` maps every point of every shadow shape back onto
+the popup to prove none lands inside it.
+
+**Corners are radial, not a product of two edges.** The decoration's shadow is a blurred rectangle,
+which is separable and drawn as the product of a horizontal and a vertical profile. The popup is
+rounded at 10px, and a rectangle's shadow would put a darker blob outside each corner where the
+popup has curved away. With the corner radius comfortably larger than the blur, the shadow near a
+corner is the profile of the distance to the arc, so each corner tile carries a radial gradient
+centred on the box's own corner, and linear gradients past it where the nearest part of the box is
+a straight edge.
+
+The sizes all follow from the tokens and the popup's radius. The margin is three standard
+deviations plus the offset, past which the profile is under a thousandth of its strength
+(`TestPopupShadowSettlesInItsMargin`). A tile is that margin plus the corner radius plus the offset,
+because a corner tile has to hold all of the curvature — the popup's arc and the box's, which the
+offset moves along the edge — or the stretched edge tile next to it would be asked for a curve it
+cannot vary along.
+
 #### The hover halo
 
 `widgets/button.svg`'s `hover` prefix is anchored the same way, and it caught the theme out.

@@ -31,12 +31,22 @@ type tokens struct {
 	ElementShape     map[string]map[string]float64 `json:"elementShape"`
 	DecorationShape  map[string]map[string]float64 `json:"decorationShape"`
 	DecorationShadow map[string]shadowSpec         `json:"decorationShadow"`
+	PopupShadow      popupShadowSpec               `json:"popupShadow"`
 	ButtonStyles     map[string]buttonStyle        `json:"buttonStyles"`
 	Opacity          map[string]float64            `json:"opacity"`
 }
 
 // shadowSpec is one point on the shadow axis: how far the band reaches beyond
 // the window, and what it is painted in. Extent zero is no band at all.
+// popupShadowSpec is the shadow under the launcher and the system tray popups.
+// See dropShadow for how it is drawn.
+type popupShadowSpec struct {
+	Color    string  `json:"color"`
+	Strength float64 `json:"strength"`
+	OffsetY  int     `json:"offsetY"`
+	Radius   int     `json:"radius"`
+}
+
 type shadowSpec struct {
 	Size     string            `json:"size"`
 	Color    string            `json:"color"`
@@ -581,9 +591,18 @@ func frames(tk *tokens, palette map[string]string, radii map[string]float64, tra
 
 	}
 
+	// The launcher and the tray popups are windows, and Plasma asks the
+	// compositor to shadow them from this file's shadow- tiles.
+	dialog := popup
+	dialog.DropShadow = &dropShadow{
+		Color: tk.PopupShadow.Color, Strength: tk.PopupShadow.Strength,
+		OffsetY: tk.PopupShadow.OffsetY, Radius: tk.PopupShadow.Radius,
+		Corner: radii["popup"],
+	}
+
 	return map[string]string{
 		"widgets/background.svg":       popup.render(),
-		"dialogs/background.svg":       popup.render(),
+		"dialogs/background.svg":       dialog.render(),
 		"widgets/tooltip.svg":          tooltip.render(),
 		"widgets/panel-background.svg": panel.render(),
 	}

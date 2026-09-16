@@ -214,6 +214,11 @@ opaque would give solid white task buttons.
 `opaque/` and `solid/` are installed whichever way the switches go: Plasma falls back to those
 prefixes on its own when compositing is off.
 
+The launcher and the system tray popups cast a soft shadow, stronger than Breeze's own so it still
+reads when a popup opens over a dark window. It is part of `dialogs/background.svg` and follows no switch — turning popups opaque
+changes the surface, not the shadow under it — and it is shaped from `popupShadow` in
+`spec/tokens.json`. Applet backgrounds on the desktop and in the panel do not get one.
+
 A preference is shown when the current selection actually uses it, whether the component declares
 it or reads it through a variant path. The step is skipped entirely when nothing selected uses any.
 

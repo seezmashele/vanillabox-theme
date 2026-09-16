@@ -39,6 +39,9 @@ const cornerFactor = 0.4478
 // See https://invent.kde.org/frameworks/plasma-framework/-/merge_requests/644.
 const maskCornerInset = 1
 
+// dropShadowGap is the space between a frame and its shadow sheet.
+const dropShadowGap = 12
+
 // frame describes a nine-tile FrameSvg: four corners, four edges and a centre,
 // laid out in a square of Size with tiles Tile across, followed by the margin
 // hints Plasma reads the frame's insets from.
@@ -94,6 +97,12 @@ type frame struct {
 	// here", for the same reason widgets/scrollwidget.svg exists at all.
 	Shadow bool
 
+	// DropShadow emits the shadow- tiles Plasma hands the compositor for a
+	// popup, laid out beside the frame. Only dialogs/background asks for one:
+	// widgets/background is the same frame, but it is what applets on the
+	// desktop and in the panel draw, and they are not windows to cast a shadow.
+	DropShadow *dropShadow
+
 	Mask     bool // emit the mask- copies used for blur regions
 	HintSize int  // size of the four margin hints
 	HintY    int  // baseline the hints sit on
@@ -107,13 +116,33 @@ type frame struct {
 func (f frame) render() string {
 	var b strings.Builder
 
-	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d">`+"\n", f.Size, f.Canvas)
+	width, height := f.Size, f.Canvas
+
+	// The shadow sheet sits to the right of the frame, clear of its tiles and
+	// hints. An element is fetched by id, so where it sits only has to avoid
+	// overlapping another element's box.
+	var shadowDefs, shadowElements []string
+	if f.DropShadow != nil {
+		x := f.Size + dropShadowGap
+		shadowDefs, shadowElements = f.DropShadow.sheet(x, 0)
+
+		width = x + 3*f.DropShadow.Tile()
+		if h := 3*f.DropShadow.Tile() + 2 + f.DropShadow.Margin(); h > height {
+			height = h
+		}
+	}
+
+	fmt.Fprintf(&b, `<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d">`+"\n", width, height)
 	b.WriteString(`<defs><style type="text/css" id="current-color-scheme">` + "\n")
 	fmt.Fprintf(&b, ".ColorScheme-Background { color:%s; }\n", f.Fallback)
 	if f.Border != "" {
 		fmt.Fprintf(&b, ".ColorScheme-Text { color:%s; }\n", f.BorderFallback)
 	}
-	b.WriteString("</style></defs>\n")
+	b.WriteString("</style>")
+	for _, d := range shadowDefs {
+		b.WriteString("\n" + d)
+	}
+	b.WriteString("</defs>\n")
 
 	fill := "fill:currentColor"
 	if f.Opacity != "" {
@@ -139,6 +168,10 @@ func (f frame) render() string {
 		for _, tile := range f.maskTiles(`style="fill:#ffffff"`) {
 			b.WriteString(strings.Replace(tile, `id="`, `id="mask-`, 1) + "\n")
 		}
+	}
+
+	for _, el := range shadowElements {
+		b.WriteString(el + "\n")
 	}
 
 	// The empty shadow prefix, tiles and margin hints together: the hints repeat

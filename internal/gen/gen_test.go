@@ -1309,3 +1309,169 @@ func rgbOf(t *testing.T, hex string) [3]float64 {
 
 	return out
 }
+
+// popupShadow is the drop shadow as the shipped dialog frame carries it.
+func popupShadow(t *testing.T) dropShadow {
+	t.Helper()
+
+	tk := testTokens(t)
+	p := tk.PopupShadow
+
+	return dropShadow{
+		Color: p.Color, Strength: p.Strength, OffsetY: p.OffsetY, Radius: p.Radius,
+		Corner: tk.ContainerShape[defaultContainers]["popup"],
+	}
+}
+
+// TestOnlyDialogsCastAShadow pins where the shadow goes. dialogs/background is
+// what Plasma reads shadow tiles from for the launcher and the tray popups;
+// widgets/background is the same frame, but applets draw it inside the panel
+// and on the desktop, and a shadow there would be a second, wrong one.
+func TestOnlyDialogsCastAShadow(t *testing.T) {
+	tk := testTokens(t)
+
+	palette, _, err := tk.colours(defaultPalette)
+	if err != nil {
+		t.Fatalf("colours: %v", err)
+	}
+
+	for _, translucent := range []bool{true, false} {
+		files := frames(tk, palette, tk.ContainerShape[defaultContainers], translucent)
+
+		dialog := files["dialogs/background.svg"]
+		for _, side := range []string{"topleft", "top", "topright", "left", "right", "bottomleft", "bottom", "bottomright"} {
+			if element(dialog, "shadow-"+side) == "" {
+				t.Errorf("translucent=%v: dialogs/background.svg has no shadow-%s", translucent, side)
+			}
+		}
+		for _, side := range []string{"top", "bottom", "left", "right"} {
+			if element(dialog, "shadow-hint-"+side+"-margin") == "" {
+				t.Errorf("translucent=%v: dialogs/background.svg has no shadow-hint-%s-margin", translucent, side)
+			}
+		}
+
+		for path, svg := range files {
+			if path != "dialogs/background.svg" && path != "widgets/tooltip.svg" && strings.Contains(svg, `id="shadow-`) {
+				t.Errorf("translucent=%v: %s carries shadow tiles, and only the dialog frame should", translucent, path)
+			}
+		}
+	}
+}
+
+// TestPopupShadowLeavesThePopupClear is the property the tiles are cut for.
+// KWin lays each tile with its outer edge a margin outside the popup, so the
+// rest of the tile sits under a popup that is 85% opaque — anything drawn there
+// is a dark band inside the edge. Every point of every shadow shape is mapped
+// back to the popup's own coordinates and checked against its rounded outline.
+func TestPopupShadowLeavesThePopupClear(t *testing.T) {
+	s := popupShadow(t)
+	svg := (&frame{Size: 44, Canvas: 60, Tile: 14, Radius: s.Corner, DropShadow: &s}).render()
+
+	m, size, r := float64(s.Margin()), float64(s.Tile()), s.Corner
+	const tolerance = 0.01
+
+	// inside reports whether a point in corner-relative coordinates — both axes
+	// running inwards from the tile's outer edges — lies strictly within the
+	// popup rather than on or outside its outline.
+	inside := func(u, v float64) bool {
+		u, v = u-m, v-m
+		if u <= tolerance || v <= tolerance {
+			return false
+		}
+		if u < r && v < r {
+			return math.Hypot(r-u, r-v) < r-tolerance
+		}
+		return true
+	}
+
+	coord := regexp.MustCompile(`(-?[\d.]+),(-?[\d.]+)`)
+
+	for _, side := range []string{"topleft", "top", "topright", "left", "right", "bottomleft", "bottom", "bottomright"} {
+		el := element(svg, "shadow-"+side)
+		box := regexp.MustCompile(`<rect x="([\d.]+)" y="([\d.]+)"`).FindStringSubmatch(el)
+		if box == nil {
+			t.Fatalf("shadow-%s has no tile box", side)
+		}
+		bx, _ := strconv.ParseFloat(box[1], 64)
+		by, _ := strconv.ParseFloat(box[2], 64)
+
+		shapes := regexp.MustCompile(`<path d="([^"]+)"`).FindAllStringSubmatch(el, -1)
+		if len(shapes) == 0 {
+			t.Errorf("shadow-%s draws nothing", side)
+		}
+
+		for _, shape := range shapes {
+			for _, c := range coord.FindAllStringSubmatch(shape[1], -1) {
+				x, _ := strconv.ParseFloat(c[1], 64)
+				y, _ := strconv.ParseFloat(c[2], 64)
+				x, y = x-bx, y-by
+
+				// Into the tile's corner-relative frame. Edge tiles have no
+				// curve, so only the axis across them matters.
+				u, v := x, y
+				if strings.Contains(side, "right") {
+					u = size - x
+				}
+				if strings.Contains(side, "bottom") {
+					v = size - y
+				}
+				switch side {
+				case "top", "bottom":
+					u = size
+				case "left", "right":
+					v = size
+				}
+
+				if inside(u, v) {
+					t.Errorf("shadow-%s draws at (%s,%s), which is under the popup", side, n(x), n(y))
+				}
+			}
+		}
+	}
+}
+
+// TestPopupShadowSettlesInItsMargin checks the margin is wide enough. The
+// outermost pixel of each tile is as far out as the shadow gets, and whatever
+// the profile still holds there is cut off in a hard line.
+func TestPopupShadowSettlesInItsMargin(t *testing.T) {
+	s := popupShadow(t)
+	m, e := float64(s.Margin()), float64(s.OffsetY)
+
+	for side, d := range map[string]float64{
+		"top":    m + e, // the offset moves the box away from the top edge
+		"bottom": m - e,
+		"side":   m,
+	} {
+		if a := s.alpha(d); a*255 >= 0.5 {
+			t.Errorf("%s: the shadow is still %.2f/255 at the edge of its %v px margin", side, a*255, m)
+		}
+	}
+}
+
+// TestPopupShadowShowsOnDarkBackdrops is why the shadow is not Breeze's. Breeze's
+// was reproduced first and could not be seen: the popups mostly open over dark
+// windows about as bright as themselves, and a quarter-strength shadow darkened
+// that backdrop by four levels. This composites the shadow over a backdrop at
+// the popup's own brightness and asks for a step an eye can find, just outside
+// each side.
+func TestPopupShadowShowsOnDarkBackdrops(t *testing.T) {
+	s := popupShadow(t)
+	e := float64(s.OffsetY)
+
+	backdrop := rgbOf(t, testTokens(t).Surfaces["grey"]["background"])[1]
+
+	for _, c := range []struct {
+		name string
+		d    float64 // distance outside the box of the first pixel past the popup
+		want float64 // levels darker, at least
+	}{
+		{"bottom", 0.5 - e, 9},
+		{"side", 0.5, 6},
+		{"top", 0.5 + e, 3},
+	} {
+		if got := backdrop * s.alpha(c.d); got < c.want {
+			t.Errorf("%s: the shadow darkens a %.0f backdrop by %.1f levels just outside the popup, want at least %.0f",
+				c.name, backdrop, got, c.want)
+		}
+	}
+}
