@@ -812,13 +812,13 @@ one. `TestOnlyDialogsCastAShadow` pins that. The `opaque/` and `solid/` copies c
 the popup transparency toggle is about the surface, not the shadow under it.
 
 **The field is a single blurred box** the shape of the popup, shrunk 3px inside its outline, pushed
-down 3px, at 0.45 strength with a blur radius of 24 — `popupShadow` in the tokens, with `radius` in Breeze's convention of
+down 3px, at 0.5 strength with a blur radius of 24 — `popupShadow` in the tokens, with `radius` in Breeze's convention of
 `stdDev = radius / 2`. It started as Breeze's own popup shadow, measured off its
 `dialogs/background.svgz` (a quarter strength, radius 6, 2px down), and that could not be seen in
 use. The launcher and the tray popups mostly open over dark windows about as bright as the popup
 itself, and a quarter-strength shadow darkened that backdrop by four levels. Checked on a live
 desktop, the shadow was there and simply below notice. The shipped values darken the same backdrop
-by about 7 levels at the side and 9 below, and reach about three times as far. The inset holds the
+by about 8 levels at the side and 10 below, and reach about three times as far. The inset holds the
 box back from the edges so the shadow gathers below the popup rather than haloing around it; the
 box stays concentric with the popup, its corners keeping the popup's centres at a radius 3px less;
 `TestPopupShadowShowsOnDarkBackdrops` holds that floor. It stays lighter than the window shadow,
